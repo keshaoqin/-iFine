@@ -393,12 +393,8 @@
             function handleStart() {
                 if (!validateSection(0)) return;
 
-                const isFemale = screeningData.gender === '女';
-                const isTargetAge = ['30-35岁', '36-40岁', '41-45岁'].includes(screeningData.age);
-                const cityTier = Object.keys(targetCities).find(tier => targetCities[tier].includes(screeningData.city));
-                const isTargetCity = cityTier === '一线城市' || cityTier === '新一线城市' || cityTier === '二线城市';
-
-                if (isFemale && isTargetAge && isTargetCity) {
+                // 移除筛选逻辑，允许所有用户完成测试
+                if (true) {
                     document.getElementById('section-0').classList.remove('visible-section');
                     document.getElementById('section-0').classList.add('hidden-section');
                     
