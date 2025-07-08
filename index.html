@@ -294,17 +294,8 @@
 
         // 执行用户筛选逻辑
         function performScreening() {
-            const gender = answers['q1_gender'];
-            const birthYear = parseInt(answers['q2_birth_year']);
-            
-            // 关键逻辑：只根据性别和年龄进行筛选
-            if (gender !== '女') return false;
-            
-            const currentYear = new Date().getFullYear();
-            const age = currentYear - birthYear;
-            if (age < 30 || age > 45) return false;
-
-            // 城市不再作为筛选条件，仅用于数据收集
+            // 修改后的逻辑：所有完成测试的用户都能看到测试结果
+            // 不再根据性别和年龄进行筛选
             return true;
         }
 
