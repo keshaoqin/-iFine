@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>精力健康评估测试</title>
+    <title>时悦轻养 - 核心健康评估问卷</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -27,250 +27,403 @@
 
         .header {
             text-align: center;
-            color: white;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             margin-bottom: 30px;
         }
 
         .header h1 {
-            font-size: 2.5rem;
+            color: #667eea;
+            font-size: 2.5em;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
         }
 
         .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
         }
 
-        .card {
-            background: white;
+        .scoring-guide {
+            background: #f8f9ff;
+            padding: 20px;
             border-radius: 15px;
-            padding: 30px;
             margin-bottom: 20px;
+        }
+
+        .scoring-guide h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .score-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 8px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .score-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .questionnaire {
+            background: white;
+            border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            overflow: hidden;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
+        .module {
+            border-bottom: 1px solid #eee;
         }
 
-        .section-title {
-            font-size: 1.5rem;
-            color: #4a5568;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
+        .module:last-child {
+            border-bottom: none;
+        }
+
+        .module-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px 30px;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .module-intro {
+            background: #f8f9ff;
+            padding: 20px 30px;
+            font-style: italic;
+            color: #666;
+            border-left: 4px solid #667eea;
         }
 
         .question {
-            margin-bottom: 25px;
+            padding: 25px 30px;
+            border-bottom: 1px solid #f0f0f0;
         }
 
-        .question-title {
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #2d3748;
-            font-size: 1.1rem;
+        .question:last-child {
+            border-bottom: none;
         }
 
-        .question-type {
-            font-size: 0.9rem;
-            color: #718096;
-            margin-bottom: 10px;
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
         }
 
         .options {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .option {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            flex: 0 1 auto;
+            min-width: 120px;
+            max-width: 160px;
         }
 
-        .option:hover {
-            border-color: #667eea;
-            background-color: #f7fafc;
+        .option input[type="radio"] {
+            display: none;
         }
 
-        .option.selected {
-            border-color: #667eea;
-            background-color: #edf2f7;
-        }
-
-        .option.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background-color: #f5f5f5;
-            border-color: #d1d5db;
-        }
-
-        .option.disabled input {
-            cursor: not-allowed;
-        }
-
-        .option input {
-            margin-right: 12px;
-            transform: scale(1.2);
-        }
-
-        .basic-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .input-group {
+        .option label {
             display: flex;
             flex-direction: column;
-        }
-
-        .input-group label {
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #4a5568;
-        }
-
-        .input-group input, .input-group select {
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .input-group input:focus, .input-group select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            padding: 12px 15px;
+            background: #f8f9ff;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            font-weight: 600;
+            font-size: 0.72em;
+            line-height: 1.3;
+            white-space: normal;
+            position: relative;
+            min-height: 80px;
+            align-items: center;
+            justify-content: center;
         }
 
-        .btn:hover {
+        .option input[type="radio"]:checked + label {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
 
-        .btn:disabled {
+        .option label:hover {
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .option label[for$="_1"]:before {
+            content: "1分";
+            display: block;
+            font-size: 0.96em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .option label[for$="_2"]:before {
+            content: "2分";
+            display: block;
+            font-size: 0.96em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .option label[for$="_3"]:before {
+            content: "3分";
+            display: block;
+            font-size: 0.96em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .option label[for$="_4"]:before {
+            content: "4分";
+            display: block;
+            font-size: 0.96em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .option label[for$="_5"]:before {
+            content: "5分";
+            display: block;
+            font-size: 0.96em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .option label[for$="_1"]:after,
+        .option label[for$="_2"]:after,
+        .option label[for$="_3"]:after,
+        .option label[for$="_4"]:after,
+        .option label[for$="_5"]:after {
+            display: none;
+        }
+
+        .option input[type="radio"]:checked + label[for$="_1"]:before,
+        .option input[type="radio"]:checked + label[for$="_2"]:before,
+        .option input[type="radio"]:checked + label[for$="_3"]:before,
+        .option input[type="radio"]:checked + label[for$="_4"]:before,
+        .option input[type="radio"]:checked + label[for$="_5"]:before {
+            color: white;
+        }
+
+        .option input[type="radio"]:checked + label[for$="_1"]:after,
+        .option input[type="radio"]:checked + label[for$="_2"]:after,
+        .option input[type="radio"]:checked + label[for$="_3"]:after,
+        .option input[type="radio"]:checked + label[for$="_4"]:after,
+        .option input[type="radio"]:checked + label[for$="_5"]:after {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .basic-info .question {
+            background: #fafbff;
+        }
+
+        .basic-info select {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            background: white;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .basic-info input[type="number"] {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            width: 150px;
+        }
+
+        .basic-info .radio-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .basic-info .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .basic-info .radio-option input[type="radio"] {
+            display: block;
+            width: 18px;
+            height: 18px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
 
+        .results {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .radar-chart-container {
+            text-align: center;
+            order: 1;
+        }
+        
+        .radar-chart-container h3 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 18px;
+        }
+        
+        #radarChart {
+            max-width: 450px;
+            height: auto;
+            margin: 0 auto;
+        }
+        
+        #resultsContent {
+            order: 2;
+        }
+
+        .results h2 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .module-result {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .module-result h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .score-display {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .status-excellent { background: #e8f5e8; color: #2e7d32; }
+        .status-good { background: #e3f2fd; color: #1976d2; }
+        .status-needs-improvement { background: #fff3e0; color: #f57c00; }
+        .status-warning { background: #ffebee; color: #d32f2f; }
+
         .progress-bar {
             width: 100%;
-            height: 8px;
-            background-color: #e2e8f0;
-            border-radius: 4px;
-            margin-bottom: 20px;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
             overflow: hidden;
+            margin-bottom: 15px;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.5s ease;
         }
 
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
+        /* Q22 布里斯托大便分类法特殊样式 */
+        .question:has(input[name="q22"]) .option {
+            transition: all 0.3s ease;
         }
-
-        .hidden {
-            display: none;
+        
+        .question:has(input[name="q22"]) .option:hover {
+            border-color: #667eea !important;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
         }
-
-        .results {
-            text-align: center;
+        
+        .question:has(input[name="q22"]) .option:has(input:checked) {
+            border-color: #667eea !important;
+            background-color: #f8f9ff !important;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
         }
-
-        .overall-score {
-            font-size: 3rem;
-            font-weight: bold;
+        
+        .question:has(input[name="q22"]) .option label {
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .question:has(input[name="q22"]) .option:has(input:checked) label {
             color: #667eea;
-            margin: 20px 0;
-        }
-
-        .health-level {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-        .pillar-scores {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .pillar-card {
-            background: #f7fafc;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 5px solid #667eea;
-        }
-
-        .pillar-name {
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #4a5568;
-        }
-
-        .pillar-score {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .recommendations {
-            text-align: left;
-            margin-top: 30px;
-        }
-
-        .recommendation-item {
-            background: #f7fafc;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            border-left: 5px solid #667eea;
-        }
-
-        .recommendation-title {
-            font-weight: 600;
-            color: #4a5568;
-            margin-bottom: 10px;
-        }
-
-        .export-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
         }
 
         @media (max-width: 768px) {
@@ -278,25 +431,63 @@
                 padding: 10px;
             }
             
-            .header h1 {
-                font-size: 2rem;
-            }
+            .results-container {
+                 gap: 20px;
+             }
+             
+             .radar-chart-container {
+                 order: 1;
+             }
+             
+             #radarChart {
+                 max-width: 100%;
+             }
             
-            .card {
-                padding: 20px;
-            }
-            
-            .basic-info {
-                grid-template-columns: 1fr;
-            }
-            
-            .navigation {
+            .options {
                 flex-direction: column;
-                gap: 10px;
+                align-items: center;
+                gap: 12px;
             }
             
-            .export-buttons {
-                flex-direction: column;
+            .option {
+                min-width: 280px;
+                max-width: 320px;
+            }
+            
+            .option label {
+                padding: 18px 25px;
+                font-size: 0.95em;
+            }
+            
+            .option label[for$="_1"]:before,
+            .option label[for$="_2"]:before,
+            .option label[for$="_3"]:before,
+            .option label[for$="_4"]:before,
+            .option label[for$="_5"]:before {
+                font-size: 1.4em;
+            }
+            
+            .option label[for$="_1"]:after,
+            .option label[for$="_2"]:after,
+            .option label[for$="_3"]:after,
+            .option label[for$="_4"]:after,
+            .option label[for$="_5"]:after {
+                font-size: 0.7em;
+            }
+            
+            /* Q22 移动端适配 */
+             .question:has(input[name="q22"]) .options {
+                 flex-direction: column !important;
+                 align-items: center;
+             }
+             
+             .question:has(input[name="q22"]) .option {
+                 min-width: 200px !important;
+                 margin-bottom: 10px;
+             }
+             
+             .header h1 {
+                 font-size: 2em;
             }
         }
     </style>
@@ -304,1331 +495,1334 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>精力健康评估测试</h1>
-            <p>全面评估您的睡眠、运动、营养、肠道健康和压力管理状况</p>
-        </div>
-
-        <!-- 进度条 -->
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
-
-        <!-- 介绍页面 -->
-        <div class="card" id="introPage">
-            <h2 class="section-title">欢迎参加精力健康评估测试</h2>
-            <div style="text-align: left; line-height: 1.8; font-size: 1.1rem; color: #4a5568;">
-                <p style="margin-bottom: 20px;">本测试将从<strong>五个核心维度</strong>全面评估您的精力健康状况：</p>
-                <ul style="margin-left: 20px; margin-bottom: 25px;">
-                    <li style="margin-bottom: 8px;"><strong>睡眠支柱</strong> - 评估您的睡眠质量和作息规律</li>
-                    <li style="margin-bottom: 8px;"><strong>运动支柱</strong> - 了解您的运动习惯和身体活动水平</li>
-                    <li style="margin-bottom: 8px;"><strong>营养支柱</strong> - 分析您的饮食模式和营养状况</li>
-                    <li style="margin-bottom: 8px;"><strong>肠道健康支柱</strong> - 检查您的消化系统健康状态</li>
-                    <li style="margin-bottom: 8px;"><strong>压力与情绪支柱</strong> - 评估您的压力管理和情绪调节能力</li>
-                </ul>
-                <div style="background: #f7fafc; padding: 20px; border-radius: 10px; border-left: 5px solid #667eea; margin-bottom: 25px;">
-                    <p style="margin-bottom: 10px;"><strong>测试说明：</strong></p>
-                    <p style="margin-bottom: 8px;">• 测试大约需要 <strong>3-5分钟</strong> 完成</p>
-                    <p style="margin-bottom: 8px;">• 请根据您<strong>最近一个月</strong>的真实情况作答</p>
-                    <p style="margin-bottom: 8px;">• 所有信息将严格保密，仅用于生成个性化健康建议</p>
-                    <p>• 完成后您将获得详细的健康评估报告和改善建议</p>
-                </div>
-                <p style="text-align: center; color: #718096; font-style: italic;">准备好开始您的健康之旅了吗？</p>
-            </div>
-            <div class="navigation" style="margin-top: 30px;">
-                <div></div>
-                <button class="btn" onclick="startTest()">开始测试</button>
+            <h1>Say I Fine</h1>
+            <p>身心健康评估问卷</p>
+            <div class="welcome-content" style="background: #f8f9ff; padding: 25px; border-radius: 15px; margin-bottom: 20px; line-height: 1.8; color: #444;">
+                <p style="margin-bottom: 20px; font-size: 1.1em;">亲爱的朋友，您好！</p>
+                <p style="margin-bottom: 20px;">欢迎参与这份特别的健康评估问卷。它是基于前沿的"生活方式医学"理念，由<strong>**医院</strong>专家团队设计，为您量身打造的一次身心健康的自我探索。</p>
+                <p style="margin-bottom: 20px;">我们将通过一系列精心设计的问题，系统性地评估您在睡眠、运动、营养、肠道健康及情绪与精力这五大核心健康支柱上的现状。这个能帮助您清晰地"看见"身体发出的信号，找到影响您精力与活力的根本原因。</p>
+                <p style="margin-bottom: 20px;">问卷预计将花费您 3-5分钟。我们承诺，您的所有回答都将被严格保密，并仅用于生成您的个性化健康分析报告。请放松心情，根据近一个月的真实情况作答。</p>
+                <p style="margin-bottom: 0; font-style: italic; color: #667eea;">感谢您愿意投入时间，开启这段探索更健康自我的旅程。</p>
             </div>
         </div>
 
-        <!-- 基本信息页面 -->
-         <div class="card hidden" id="basicInfoPage">
-            <h2 class="section-title">基本信息</h2>
-            <div class="basic-info">
-                <div class="input-group">
-                    <label for="birth-year">出生年份</label>
-                    <select id="birth-year">
-                        <option value="">请选择出生年份</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="gender">性别</label>
-                    <select id="gender">
-                        <option value="">请选择</option>
-                        <option value="male">男</option>
-                        <option value="female">女</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="province">省份</label>
-                    <select id="province" onchange="updateCities()">
-                        <option value="">请选择省份</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="city">城市</label>
-                    <select id="city">
-                        <option value="">请先选择省份</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="occupation">职业状态</label>
-                    <select id="occupation">
-                        <option value="">请选择</option>
-                        <option value="full-time-office">全职工作（固定通勤）</option>
-                        <option value="full-time-remote">全职工作（灵活/居家办公）</option>
-                        <option value="freelance">自由职业/自主创业</option>
-                        <option value="full-time-mom">全职妈妈</option>
-                        <option value="unemployed">暂未工作</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="marital-status">婚姻与家庭状况</label>
-                    <select id="marital-status">
-                        <option value="">请选择</option>
-                        <option value="single">未婚</option>
-                        <option value="married-no-children">已婚未育</option>
-                        <option value="married-preschool">已婚，有学龄前子女 (0-6岁)</option>
-                        <option value="married-school-age">已婚，有学龄期子女 (7岁及以上)</option>
-                        <option value="married-both">已婚，有学龄前与学龄期子女</option>
-                    </select>
-                </div>
-            </div>
-            <div class="navigation">
-                <div></div>
-                <button class="btn" onclick="nextPage()">开始测试</button>
-            </div>
-        </div>
-
-        <!-- 问卷页面 -->
-        <div class="card hidden" id="questionnairePage">
-            <h2 class="section-title" id="currentSectionTitle">睡眠支柱</h2>
-            <div id="questionContainer"></div>
-            <div class="navigation">
-                <button class="btn" id="prevBtn" onclick="prevQuestion()" style="display: none;">上一题</button>
-                <button class="btn" id="nextBtn" onclick="nextQuestion()">下一题</button>
-            </div>
-        </div>
-
-        <!-- 结果页面 -->
-        <div class="card hidden" id="resultsPage">
-            <h2 class="section-title">您的健康评估结果</h2>
-            <div class="results">
-                <div class="overall-score" id="overallScore">85%</div>
-                <div class="health-level" id="healthLevel">状态良好</div>
+        <form id="healthForm" class="questionnaire">
+            <!-- 基础信息模块 -->
+            <div class="module basic-info">
+                <div class="module-header">基础信息</div>
                 
-                <!-- 雷达图可视化 -->
-                <div class="chart-container" style="margin: 30px 0; text-align: center;">
-                    <h3 style="margin-bottom: 20px; color: #4a5568;">五维健康雷达图</h3>
-                    <canvas id="healthRadarChart" width="400" height="400" style="max-width: 400px; max-height: 400px; margin: 0 auto;"></canvas>
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q1.</span>您的生理性别是？
+                    </div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="gender_female" name="gender" value="female" required>
+                            <label for="gender_female">女</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="gender_male" name="gender" value="male" required>
+                            <label for="gender_male">男</label>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="pillar-scores" id="pillarScores"></div>
-                
-                <div class="recommendations" id="recommendations"></div>
-                
-                <div class="export-buttons">
-                    <button class="btn" onclick="exportToPDF()">导出PDF报告</button>
-                    <button class="btn" onclick="exportToJSON()">导出数据</button>
-                    <button class="btn" onclick="restartTest()">重新测试</button>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q2.</span>您的出生年份是？
+                    </div>
+                    <select name="birth_year" required>
+                        <option value="">请选择年份</option>
+                        <option value="1960">1960</option>
+                        <option value="1961">1961</option>
+                        <option value="1962">1962</option>
+                        <option value="1963">1963</option>
+                        <option value="1964">1964</option>
+                        <option value="1965">1965</option>
+                        <option value="1966">1966</option>
+                        <option value="1967">1967</option>
+                        <option value="1968">1968</option>
+                        <option value="1969">1969</option>
+                        <option value="1970">1970</option>
+                        <option value="1971">1971</option>
+                        <option value="1972">1972</option>
+                        <option value="1973">1973</option>
+                        <option value="1974">1974</option>
+                        <option value="1975">1975</option>
+                        <option value="1976">1976</option>
+                        <option value="1977">1977</option>
+                        <option value="1978">1978</option>
+                        <option value="1979">1979</option>
+                        <option value="1980">1980</option>
+                        <option value="1981">1981</option>
+                        <option value="1982">1982</option>
+                        <option value="1983">1983</option>
+                        <option value="1984">1984</option>
+                        <option value="1985">1985</option>
+                        <option value="1986">1986</option>
+                        <option value="1987">1987</option>
+                        <option value="1988" selected>1988</option>
+                        <option value="1989">1989</option>
+                        <option value="1990">1990</option>
+                        <option value="1991">1991</option>
+                        <option value="1992">1992</option>
+                        <option value="1993">1993</option>
+                        <option value="1994">1994</option>
+                        <option value="1995">1995</option>
+                        <option value="1996">1996</option>
+                        <option value="1997">1997</option>
+                        <option value="1998">1998</option>
+                        <option value="1999">1999</option>
+                        <option value="2000">2000</option>
+                        <option value="2001">2001</option>
+                        <option value="2002">2002</option>
+                        <option value="2003">2003</option>
+                        <option value="2004">2004</option>
+                        <option value="2005">2005</option>
+                        <option value="2006">2006</option>
+                        <option value="2007">2007</option>
+                        <option value="2008">2008</option>
+                        <option value="2009">2009</option>
+                        <option value="2010">2010</option>
+                    </select>
                 </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q3.</span>您目前主要居住的城市是？
+                    </div>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <select name="province" id="provinceSelect" required style="flex: 1; min-width: 200px;">
+                            <option value="">请选择省份</option>
+                            <option value="北京市">北京市</option>
+                            <option value="天津市">天津市</option>
+                            <option value="上海市">上海市</option>
+                            <option value="重庆市">重庆市</option>
+                            <option value="河北省">河北省</option>
+                            <option value="山西省">山西省</option>
+                            <option value="辽宁省">辽宁省</option>
+                            <option value="吉林省">吉林省</option>
+                            <option value="黑龙江省">黑龙江省</option>
+                            <option value="江苏省">江苏省</option>
+                            <option value="浙江省">浙江省</option>
+                            <option value="安徽省">安徽省</option>
+                            <option value="福建省">福建省</option>
+                            <option value="江西省">江西省</option>
+                            <option value="山东省">山东省</option>
+                            <option value="河南省">河南省</option>
+                            <option value="湖北省">湖北省</option>
+                            <option value="湖南省">湖南省</option>
+                            <option value="广东省">广东省</option>
+                            <option value="海南省">海南省</option>
+                            <option value="四川省">四川省</option>
+                            <option value="贵州省">贵州省</option>
+                            <option value="云南省">云南省</option>
+                            <option value="陕西省">陕西省</option>
+                            <option value="甘肃省">甘肃省</option>
+                            <option value="青海省">青海省</option>
+                            <option value="台湾省">台湾省</option>
+                            <option value="内蒙古自治区">内蒙古自治区</option>
+                            <option value="广西壮族自治区">广西壮族自治区</option>
+                            <option value="西藏自治区">西藏自治区</option>
+                            <option value="宁夏回族自治区">宁夏回族自治区</option>
+                            <option value="新疆维吾尔自治区">新疆维吾尔自治区</option>
+                            <option value="香港特别行政区">香港特别行政区</option>
+                            <option value="澳门特别行政区">澳门特别行政区</option>
+                        </select>
+                        <select name="city" id="citySelect" required style="flex: 1; min-width: 200px;" disabled>
+                            <option value="">请先选择省份</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q4.</span>您目前的职业状态更接近于？
+                    </div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="job1" name="job_status" value="fulltime_commute" required>
+                            <label for="job1">全职工作（固定通勤）</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="job2" name="job_status" value="fulltime_flexible" required>
+                            <label for="job2">全职工作（灵活/居家办公）</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="job3" name="job_status" value="freelance" required>
+                            <label for="job3">自由职业/自主创业</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="job4" name="job_status" value="fulltime_mom" required>
+                            <label for="job4">全职妈妈</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="job5" name="job_status" value="unemployed" required>
+                            <label for="job5">暂未工作</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q5.</span>您目前的婚姻与家庭状况是？
+                    </div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="marriage1" name="marriage_status" value="single" required>
+                            <label for="marriage1">未婚</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="marriage2" name="marriage_status" value="married_no_children" required>
+                            <label for="marriage2">已婚未育</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="marriage3" name="marriage_status" value="married_preschool" required>
+                            <label for="marriage3">已婚，有学龄前子女 (0-6岁)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="marriage4" name="marriage_status" value="married_school" required>
+                            <label for="marriage4">已婚，有学龄期子女 (7岁及以上)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="marriage5" name="marriage_status" value="married_both" required>
+                            <label for="marriage5">已婚，有学龄前与学龄期子女</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 情绪与精力模块 -->
+            <div class="module">
+                <div class="module-header">情绪与精力</div>
+                <div class="module-intro">情绪是内心的罗盘，精力是生命的货币。请为以下描述打分。</div>
+                
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q6.</span>我感觉精力充沛，从早到晚都能保持稳定的活力，很少出现犯困的感觉。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q6_1" name="q6" value="1" required>
+                            <label for="q6_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q6_2" name="q6" value="2" required>
+                            <label for="q6_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q6_3" name="q6" value="3" required>
+                            <label for="q6_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q6_4" name="q6" value="4" required>
+                            <label for="q6_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q6_5" name="q6" value="5" required>
+                            <label for="q6_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q7.</span>我的情绪整体是平和稳定的，很少会感到莫名的烦躁、易怒，或对他人（包括亲人）缺乏耐心。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q7_1" name="q7" value="1" required>
+                            <label for="q7_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q7_2" name="q7" value="2" required>
+                            <label for="q7_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q7_3" name="q7" value="3" required>
+                            <label for="q7_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q7_4" name="q7" value="4" required>
+                            <label for="q7_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q7_5" name="q7" value="5" required>
+                            <label for="q7_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q8.</span>当遇到挫折或压力时，我能有效调整心态，不会长时间陷入负面情绪、反复思虑或感到手足无措。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q8_1" name="q8" value="1" required>
+                            <label for="q8_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q8_2" name="q8" value="2" required>
+                            <label for="q8_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q8_3" name="q8" value="3" required>
+                            <label for="q8_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q8_4" name="q8" value="4" required>
+                            <label for="q8_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q8_5" name="q8" value="5" required>
+                            <label for="q8_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q9.</span>我的思维清晰、敏锐，能够长时间保持专注，没有"脑雾"感。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q9_1" name="q9" value="1" required>
+                            <label for="q9_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q9_2" name="q9" value="2" required>
+                            <label for="q9_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q9_3" name="q9" value="3" required>
+                            <label for="q9_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q9_4" name="q9" value="4" required>
+                            <label for="q9_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q9_5" name="q9" value="5" required>
+                            <label for="q9_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q10.</span>我的身体是放松的，特别是肩颈和后背，没有长期存在的紧张和僵硬感。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q10_1" name="q10" value="1" required>
+                            <label for="q10_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q10_2" name="q10" value="2" required>
+                            <label for="q10_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q10_3" name="q10" value="3" required>
+                            <label for="q10_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q10_4" name="q10" value="4" required>
+                            <label for="q10_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q10_5" name="q10" value="5" required>
+                            <label for="q10_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q11.</span>我对生活和工作充满热情和动力，能从中感受到乐趣和满足感。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q11_1" name="q11" value="1" required>
+                            <label for="q11_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q11_2" name="q11" value="2" required>
+                            <label for="q11_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q11_3" name="q11" value="3" required>
+                            <label for="q11_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q11_4" name="q11" value="4" required>
+                            <label for="q11_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q11_5" name="q11" value="5" required>
+                            <label for="q11_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 睡眠模块 -->
+            <div class="module">
+                <div class="module-header">睡眠</div>
+                <div class="module-intro">睡眠是身心修复的黄金时间。一个理想的睡眠，是节律、效率和质量的完美统一。请为以下描述打分。</div>
+                
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q12.</span>我拥有规律的作息，并且通常能保证每晚 6-8小时的有效睡眠时长。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q12_1" name="q12" value="1" required>
+                            <label for="q12_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q12_2" name="q12" value="2" required>
+                            <label for="q12_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q12_3" name="q12" value="3" required>
+                            <label for="q12_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q12_4" name="q12" value="4" required>
+                            <label for="q12_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q12_5" name="q12" value="5" required>
+                            <label for="q12_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q13.</span>躺下后，我的大脑能够很快平静下来，轻松、快速地入睡。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q13_1" name="q13" value="1" required>
+                            <label for="q13_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q13_2" name="q13" value="2" required>
+                            <label for="q13_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q13_3" name="q13" value="3" required>
+                            <label for="q13_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q13_4" name="q13" value="4" required>
+                            <label for="q13_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q13_5" name="q13" value="5" required>
+                            <label for="q13_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q14.</span>我夜间的睡眠是连续完整的，半夜清醒（不含偶尔上厕所后马上睡着）的次数通常少于1次。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q14_1" name="q14" value="1" required>
+                            <label for="q14_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q14_2" name="q14" value="2" required>
+                            <label for="q14_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q14_3" name="q14" value="3" required>
+                            <label for="q14_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q14_4" name="q14" value="4" required>
+                            <label for="q14_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q14_5" name="q14" value="5" required>
+                            <label for="q14_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q15.</span>我的睡眠感觉很"沉"，很少有多梦、纷乱的感觉，一觉醒来身体是轻松的，而不是沉重的。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q15_1" name="q15" value="1" required>
+                            <label for="q15_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q15_2" name="q15" value="2" required>
+                            <label for="q15_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q15_3" name="q15" value="3" required>
+                            <label for="q15_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q15_4" name="q15" value="4" required>
+                            <label for="q15_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q15_5" name="q15" value="5" required>
+                            <label for="q15_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q16.</span>一觉起来，总能感觉神清气爽，让我拥有非常好的工作状态，而不是靠咖啡提神。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q16_1" name="q16" value="1" required>
+                            <label for="q16_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q16_2" name="q16" value="2" required>
+                            <label for="q16_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q16_3" name="q16" value="3" required>
+                            <label for="q16_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q16_4" name="q16" value="4" required>
+                            <label for="q16_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q16_5" name="q16" value="5" required>
+                            <label for="q16_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q17.</span>我能够自然入睡，无需借助任何外物，如药物、褪黑素、眼罩、耳塞、白噪音或特殊的助眠枕头。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q17_1" name="q17" value="1" required>
+                            <label for="q17_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q17_2" name="q17" value="2" required>
+                            <label for="q17_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q17_3" name="q17" value="3" required>
+                            <label for="q17_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q17_4" name="q17" value="4" required>
+                            <label for="q17_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q17_5" name="q17" value="5" required>
+                            <label for="q17_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 肠道模块 -->
+            <div class="module">
+                <div class="module-header">肠道</div>
+                <div class="module-intro">肠道是健康的根基，它的感受，全身都知道。请为以下描述打分。</div>
+                
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q18.</span>用餐后，我的胃部感觉舒展、轻松，没有消化不良或食物堵塞感。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q18_1" name="q18" value="1" required>
+                            <label for="q18_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q18_2" name="q18" value="2" required>
+                            <label for="q18_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q18_3" name="q18" value="3" required>
+                            <label for="q18_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q18_4" name="q18" value="4" required>
+                            <label for="q18_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q18_5" name="q18" value="5" required>
+                            <label for="q18_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q19.</span>我很少受到烧心、胃酸反流或频繁嗳气的困扰。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q19_1" name="q19" value="1" required>
+                            <label for="q19_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q19_2" name="q19" value="2" required>
+                            <label for="q19_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q19_3" name="q19" value="3" required>
+                            <label for="q19_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q19_4" name="q19" value="4" required>
+                            <label for="q19_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q19_5" name="q19" value="5" required>
+                            <label for="q19_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q20.</span>我的腹部（肚脐周围）是柔软、舒适的，很少出现胀气、咕噜作响或痉挛性疼痛。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q20_1" name="q20" value="1" required>
+                            <label for="q20_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q20_2" name="q20" value="2" required>
+                            <label for="q20_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q20_3" name="q20" value="3" required>
+                            <label for="q20_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q20_4" name="q20" value="4" required>
+                            <label for="q20_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q20_5" name="q20" value="5" required>
+                            <label for="q20_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q21.</span>我的排便体验是轻松、规律且有完全排尽感的。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q21_1" name="q21" value="1" required>
+                            <label for="q21_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q21_2" name="q21" value="2" required>
+                            <label for="q21_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q21_3" name="q21" value="3" required>
+                            <label for="q21_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q21_4" name="q21" value="4" required>
+                            <label for="q21_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q21_5" name="q21" value="5" required>
+                            <label for="q21_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q22.</span>我的粪便形态是理想的（如光滑的香蕉状），没有过干、过硬或稀烂、粘马桶的情况。
+                    </div>
+                    <div class="options" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
+                        <div class="option" style="display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; min-width: 120px; cursor: pointer;" onclick="document.getElementById('q22_1').checked = true;">
+                             <input type="radio" id="q22_1" name="q22" value="1" required style="margin-bottom: 5px;">
+                             <label for="q22_1" style="text-align: center; font-size: 14px; font-weight: bold;">1分<br>分离的硬块状<br>（便秘，最差）</label>
+                         </div>
+                        <div class="option" style="display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; min-width: 120px; cursor: pointer;" onclick="document.getElementById('q22_2').checked = true;">
+                             <input type="radio" id="q22_2" name="q22" value="2" required style="margin-bottom: 5px;">
+                             <label for="q22_2" style="text-align: center; font-size: 14px; font-weight: bold;">2分<br>完全液体状<br>（腹泻）</label>
+                         </div>
+                        <div class="option" style="display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; min-width: 120px; cursor: pointer;" onclick="document.getElementById('q22_3').checked = true;">
+                             <input type="radio" id="q22_3" name="q22" value="3" required style="margin-bottom: 5px;">
+                             <label for="q22_3" style="text-align: center; font-size: 14px; font-weight: bold;">3分<br>糊状便<br>（偏软）</label>
+                         </div>
+                        <div class="option" style="display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; min-width: 120px; cursor: pointer;" onclick="document.getElementById('q22_4').checked = true;">
+                             <input type="radio" id="q22_4" name="q22" value="4" required style="margin-bottom: 5px;">
+                             <label for="q22_4" style="text-align: center; font-size: 14px; font-weight: bold;">4分<br>软块状<br>（偏软便）</label>
+                         </div>
+                        <div class="option" style="display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; min-width: 120px; cursor: pointer;" onclick="document.getElementById('q22_5').checked = true;">
+                             <input type="radio" id="q22_5" name="q22" value="5" required style="margin-bottom: 5px;">
+                             <label for="q22_5" style="text-align: center; font-size: 14px; font-weight: bold;">5分<br>光滑香蕉状<br>（理想状态）</label>
+                         </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q23.</span>我能安心地享用各种家常食物，很少因为吃某种特定食物（如牛奶、面食、油腻食物）而立刻引发肠胃不适。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q23_1" name="q23" value="1" required>
+                            <label for="q23_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q23_2" name="q23" value="2" required>
+                            <label for="q23_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q23_3" name="q23" value="3" required>
+                            <label for="q23_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q23_4" name="q23" value="4" required>
+                            <label for="q23_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q23_5" name="q23" value="5" required>
+                            <label for="q23_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 营养模块 -->
+            <div class="module">
+                <div class="module-header">营养</div>
+                <div class="module-intro">每一口食物，都是一次与身体对话的机会。请为以下描述打分。</div>
+                
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q24.</span>我的饮食主要以天然、新鲜的食材为主（如自己做的饭菜），很少依赖外卖、速食或零食等超加工食品。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q24_1" name="q24" value="1" required>
+                            <label for="q24_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q24_2" name="q24" value="2" required>
+                            <label for="q24_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q24_3" name="q24" value="3" required>
+                            <label for="q24_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q24_4" name="q24" value="4" required>
+                            <label for="q24_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q24_5" name="q24" value="5" required>
+                            <label for="q24_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q25.</span>回顾我的正餐餐盘，通常都是搭配均衡的，能确保有足量的蔬菜和优质蛋白质，而不是被米饭、面条等主食占满。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q25_1" name="q25" value="1" required>
+                            <label for="q25_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q25_2" name="q25" value="2" required>
+                            <label for="q25_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q25_3" name="q25" value="3" required>
+                            <label for="q25_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q25_4" name="q25" value="4" required>
+                            <label for="q25_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q25_5" name="q25" value="5" required>
+                            <label for="q25_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q26.</span>我能清晰地分辨并应对身体的饥饿信号，很少会因为压力、无聊或情绪不佳而下意识地寻找食物来"填补空虚"。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q26_1" name="q26" value="1" required>
+                            <label for="q26_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q26_2" name="q26" value="2" required>
+                            <label for="q26_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q26_3" name="q26" value="3" required>
+                            <label for="q26_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q26_4" name="q26" value="4" required>
+                            <label for="q26_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q26_5" name="q26" value="5" required>
+                            <label for="q26_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 运动模块 -->
+            <div class="module">
+                <div class="module-header">运动</div>
+                <div class="module-intro">身体为活动而生，规律的运动是提升生命活力的最佳"药物"。请为以下描述打分。</div>
+                
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q27.</span>在进行连续上两三层楼梯、快走赶路等日常活动时，我的呼吸能保持平稳顺畅，身体感觉轻松。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q27_1" name="q27" value="1" required>
+                            <label for="q27_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q27_2" name="q27" value="2" required>
+                            <label for="q27_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q27_3" name="q27" value="3" required>
+                            <label for="q27_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q27_4" name="q27" value="4" required>
+                            <label for="q27_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q27_5" name="q27" value="5" required>
+                            <label for="q27_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q28.</span>我感觉自己的肌肉力量充足，能够轻松胜任拎提重物、长时间抱孩子或搬动家具等日常体力活动。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q28_1" name="q28" value="1" required>
+                            <label for="q28_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q28_2" name="q28" value="2" required>
+                            <label for="q28_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q28_3" name="q28" value="3" required>
+                            <label for="q28_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q28_4" name="q28" value="4" required>
+                            <label for="q28_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q28_5" name="q28" value="5" required>
+                            <label for="q28_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">Q29.</span>我的一天中包含了充足的身体活动（如走路、站立、做家务），很少有长时间"粘"在椅子上的情况。
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q29_1" name="q29" value="1" required>
+                            <label for="q29_1">完全不同意/从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q29_2" name="q29" value="2" required>
+                            <label for="q29_2">不太同意/偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q29_3" name="q29" value="3" required>
+                            <label for="q29_3">一般/有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q29_4" name="q29" value="4" required>
+                            <label for="q29_4">比较同意/经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q29_5" name="q29" value="5" required>
+                            <label for="q29_5">完全同意/总是如此</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">提交评估</button>
+        </form>
+
+        <div id="results" class="results">
+            <h2>您的健康评估结果</h2>
+            <div class="results-container">
+                <div class="radar-chart-container">
+                    <h3>健康状态雷达图</h3>
+                    <canvas id="radarChart" width="400" height="400"></canvas>
+                </div>
+                <div id="resultsContent"></div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // 问卷数据结构 - 严格按照测试报告.md中的题目
-        const questionnaire = {
-            sleep: {
-                title: "睡眠支柱",
-                intro: "睡眠是身心修复的根本。接下来的问题将帮助我们一同探寻影响您睡眠质量的关键环节。",
-                questions: [
-                    {
-                        id: "Q6",
-                        type: "single",
-                        category: "standard",
-                        text: "您通常的睡眠节律（上床睡觉和起床的时间）是怎样的？",
-                        options: [
-                            { text: "非常规律：工作日与周末的作息时间差异在1小时以内，形成了固定的生物钟。", score: 4 },
-                            { text: "基本规律：工作日作息规律，但周末会晚睡晚起，与工作日差异在1-2小时。", score: 3 },
-                            { text: "不太规律：上床和起床时间经常变动，没有形成固定的睡眠节奏。", score: 2 },
-                            { text: "严重不规律：几乎没有固定的作息，经常因工作或娱乐而\"报复性熬夜\"。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q7",
-                        type: "single",
-                        category: "standard",
-                        text: "在关闭光源、准备入睡后，您通常需要多久才能真正睡着？",
-                        options: [
-                            { text: "快速入睡：几乎总是在15分钟内就能轻松睡着。", score: 4 },
-                            { text: "正常入睡：通常需要15-30分钟左右才能入睡。", score: 3 },
-                            { text: "入睡困难：经常需要30-60分钟，有时会感到焦虑或转身。", score: 2 },
-                            { text: "严重入睡困难：绝大多数时候都需要1小时以上才能入睡。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q8",
-                        type: "single",
-                        category: "standard",
-                        text: "在夜间，您的睡眠连续性如何？",
-                        options: [
-                            { text: "非常连续：几乎总是一觉到天亮，没有夜醒的困扰。", score: 4 },
-                            { text: "偶有中断：偶尔会醒来1次（如上厕所），但能立刻重新入睡。", score: 3 },
-                            { text: "经常中断：每周都有数晚会醒来2次或以上，或者醒来后需要一些时间才能再次入睡。", score: 2 },
-                            { text: "严重碎片化：几乎每晚都会醒来多次，或有长时间的清醒时段，感觉整晚都在\"似睡非睡\"。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q9",
-                        type: "single",
-                        category: "standard",
-                        text: "清晨醒来时，您的第一感觉通常是？",
-                        options: [
-                            { text: "精力充沛：感觉神清气爽，身体和大脑都像\"充满电\"一样，已为新的一天做好准备。", score: 4 },
-                             { text: "尚可接受：感觉基本睡够了，但仍有些许困意，需要一段时间（如喝杯咖啡）来完全清醒。", score: 3 },
-                             { text: "明显疲惫：感觉身体沉重，像\"没睡够\"一样，需要挣扎着起床。", score: 2 },
-                             { text: "醒来即耗竭：感觉比睡前更累，大脑昏沉，甚至伴有头痛或情绪低落。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q10",
-                        type: "multiple",
-                        category: "core",
-                        text: "请您勾选出所有符合您近一个月睡眠情况的具体描述。(可多选)",
-                        options: [
-                            { text: "入睡困难，躺在床上大脑异常清醒，思绪万千", score: 1 },
-                            { text: "睡眠很浅，容易被最轻微的声音或光线惊醒，多梦", score: 1 },
-                            { text: "夜间频繁醒来（醒来2次及以上），或在凌晨（如3-4点）早醒后无法再入睡", score: 1 },
-                            { text: "夜间有盗汗、身体燥热、腿部不宁（酸、麻、胀）或磨牙等身体不适", score: 1 },
-                            { text: "睡醒后依旧感觉疲惫，脖子或后背僵硬疼痛，感觉\"睡了一场假觉\"", score: 1 },
-                            { text: "即使睡够了时长，白天依然容易犯困，注意力难以集中", score: 1 },
-                            { text: "我几乎没有以上任何问题", score: 0 }
-                        ]
-                    }
-                ]
-            },
-            exercise: {
-                title: "运动支柱",
-                intro: "身体天生为活动而设计。规律的运动不仅塑造体型，更是提升精力、改善情绪、优化代谢的核心要素。让我们一同审视您的\"能量消耗\"模式。",
-                questions: [
-                    {
-                        id: "Q11",
-                        type: "single",
-                        category: "standard",
-                        text: "您平均每周进行几次能让自己\"心跳呼吸明显加快，但仍能说话\"的中等强度运动（如快走、慢跑、游泳、健身操等），每次至少持续30分钟？",
-                        options: [
-                            { text: "积极且规律：每周能保证4次及以上。", score: 4 },
-                            { text: "有意识地参与：每周能进行2-3次。", score: 3 },
-                            { text: "偶尔为之：每周仅能进行1次或更少。", score: 2 },
-                            { text: "几乎从不：近一个月几乎没有进行过任何主动的体育锻炼。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q12",
-                        type: "single",
-                        category: "standard",
-                        text: "除去刻意的运动时间，您的日常生活和工作状态更接近以下哪种\"活动模式\"？",
-                        options: [
-                            { text: "动态模式：我的工作或生活（如教师、销售、全职妈妈）要求我一天中大部分时间都需要站立或走动。", score: 4 },
-                            { text: "混合模式：我的工作以静坐为主，但我有意识地、并频繁地起身活动、走动或走楼梯。", score: 3 },
-                            { text: "静态模式：我一天中绝大部分时间都坐在办公桌前，经常一坐就是数小时，很少主动起身。", score: 2 },
-                            { text: "深度静态模式：我不仅工作时长时间静坐，我的休闲时间也大多是坐着或躺着度过的（如看剧、玩游戏）。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q13",
-                        type: "multiple",
-                        category: "core",
-                        text: "请选择所有阻碍您动起来，或在运动中遇到的真实困扰。(可多选)",
-                        options: [
-                            { text: "经常处于\"想动但又没力气动\"的状态，光是\"决定去运动\"这一步就耗尽了心力。", score: 1 },
-                            { text: "工作、家务和照顾家人占据了所有时间，感觉完全没有属于自己的\"运动时间窗口\"。", score: 1 },
-                            { text: "尝试过运动，但感觉效果甚微（如体重没变），因此很容易放弃。", score: 1 },
-                            { text: "身体僵硬、平衡感差，或运动后身体（尤其是关节）的酸痛感会持续很久。", score: 1 },
-                            { text: "在生理周期的某个阶段（如经前期或经期），会感到精力、体力明显下降，难以维持运动计划。", score: 1 },
-                            { text: "觉得运动过程很枯燥，或者在公共场合（如健身房）运动会感到不自在、尴尬。", score: 1 },
-                            { text: "我几乎没有以上任何困扰。", score: 0 }
-                        ]
-                    }
-                ]
-            },
-            nutrition: {
-                title: "营养支柱",
-                intro: "\"人如其食\"。您吃的每一口食物，都在细胞层面塑造着您明天的健康。让我们一同来审视您的\"能量补给\"系统。",
-                questions: [
-                    {
-                        id: "Q14",
-                        type: "single",
-                        category: "standard",
-                        text: "您通常如何开启一天的饮食，即您的早餐习惯是怎样的？",
-                        options: [
-                            { text: "优质启动：早餐富含优质蛋白质（如鸡蛋、牛奶、豆浆）和健康脂肪，能提供持久的饱腹感和稳定的精力。", score: 4 },
-                            { text: "常规启动：以复合碳水（如燕麦、全麦面包、杂粮粥）为主，能提供较为平稳的能量。", score: 3 },
-                            { text: "高糖启动：早餐主要是精制碳水化合物（如白面包、包子、糕点）或含糖饮品，吃完很快又会饿。", score: 2 },
-                            { text: "跳过/应付启动：几乎不吃早餐，或仅用一杯咖啡来开启一天。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q15",
-                        type: "single",
-                        category: "standard",
-                        text: "纵观您的午餐和晚餐，哪种描述最贴近您的真实\"膳食模式\"？",
-                        options: [
-                            { text: "均衡自煮：大部分自己做饭，有意识地确保餐盘中至少一半是蔬菜，搭配足量的优质蛋白质和适量的好主食。", score: 4 },
-                            { text: "外食优选：虽然经常在外就餐，但会主动选择更健康的选项，如轻食沙拉、均衡搭配的套餐或非油炸的菜品。", score: 3 },
-                            { text: "便捷快餐：主要依赖外卖、快餐或食堂解决，饮食内容普遍高油、高盐、高碳水，蔬菜摄入严重不足。", score: 2 },
-                            { text: "生存代替：经常因为忙碌而错过正餐，用零食、泡面、面包等高度加工食品来充饥。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q16",
-                        type: "multiple",
-                        category: "core",
-                        text: "饮食不仅关乎吃什么，更关乎我们与食物的关系以及它如何影响我们的身心。请坦诚地选择，您在饮食方面正面临的所有困扰(可多选)",
-                        options: [
-                            { text: "不吃主食或甜食就心慌手抖，吃了又容易犯困、脑雾。", score: 1 },
-                            { text: "习惯在压力、疲劳或无聊时，用高油盐、高糖分的食物来寻求慰藉和\"充电\"。", score: 1 },
-                            { text: "感觉一天也离不开奶茶、咖啡或其它含糖饮料，否则情绪和精力都会变差。", score: 1 },
-                            { text: "觉得自己吃得挺健康（如沙拉、全麦面包），但依然容易腹胀、疲劳或体重难以下降。", score: 1 },
-                            { text: "经常处于\"严格控制饮食\"和\"失控暴饮暴食\"的两种状态间摇摆，并伴随强烈的负罪感。", score: 1 },
-                            { text: "自己的饮食常常要将就家人（尤其是孩子）的口味和时间，导致营养摄入不均衡或不规律。", score: 1 },
-                            { text: "我几乎没有以上任何困扰。", score: 0 }
-                        ]
-                    }
-                ]
-            },
-            gut: {
-                title: "肠道健康支柱",
-                intro: "肠道是健康的\"根基\"，超过70%的免疫细胞定居于此。肠道的信号至关重要。",
-                questions: [
-                    {
-                        id: "Q17",
-                        type: "single",
-                        category: "standard",
-                        text: "在吃完一顿正餐后，您的上腹部（胃部）通常是什么感觉？",
-                        options: [
-                            { text: "轻松舒适：感觉食物被顺利消化，身体轻盈有活力。", score: 4 },
-                            { text: "感觉正常：有饱腹感，但没有明显不适。", score: 3 },
-                            { text: "腹胀沉重：经常感觉腹部胀满，像有石头堵着，食物很久才消化掉。", score: 2 },
-                            { text: "不适明显：经常感到烧心、胃酸反流或缓缓作痛。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q18",
-                        type: "single",
-                        category: "standard",
-                        text: "您近一个月的排便规律和形态，整体来看最符合哪种描述？",
-                        options: [
-                            { text: "非常理想：几乎每日都有1-2次规律、顺畅的排便，粪便成形如香蕉状。", score: 4 },
-                            { text: "基本正常：大致能保证每日排便，但偶尔粪便形态不佳（偏硬或偏软）。", score: 3 },
-                            { text: "经常紊乱：排便时间和状态非常不规律，经常在便秘（干硬、数日一次）和腹泻（稀烂、一日多次）之间摇摆。", score: 2 },
-                            { text: "长期失衡：存在长期、顽固的便秘或腹泻问题，常有排不尽感。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q19",
-                        type: "single",
-                        category: "standard",
-                        text: "当您感到压力大或情绪紧张时，您的肠道通常会作何反应？",
-                        options: [
-                            { text: "几乎无反应：肠道功能稳定，基本不受情绪波动的影响。", score: 4 },
-                            { text: "轻微关联：在极大的压力下，会感觉肠胃有些许不适。", score: 3 },
-                            { text: "明显关联：情绪一紧张，肠道就容易出现痉挛、腹痛或排便习惯改变。", score: 2 },
-                            { text: "高度同步：肠道几乎成了情绪的\"晴雨表\"，任何情绪波动都会立刻在肠道上有所体现。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q20",
-                        type: "single",
-                        category: "standard",
-                        text: "您是否注意到，当肠胃不适时，您的身体其他部位（尤其是皮肤）也会随之出现问题？",
-                        options: [
-                            { text: "基本无关联：肠道问题似乎只影响消化系统本身。", score: 4 },
-                            { text: "偶有关联：偶尔怀疑肠胃不好时，脸上更容易长痘。", score: 3 },
-                            { text: "比较确定有关联：肠胃不适期间，皮肤（面部、后背）出问题或过敏的概率明显增加。", score: 2 },
-                            { text: "有非常清晰的关联：皮肤状态几乎就是肠道健康的镜子，甚至有时会伴随关节疼痛或疲劳感加重。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q21",
-                        type: "multiple",
-                        category: "core",
-                        text: "请仔细阅读并选择您在肠道和消化方面遇到的所有具体症状。这能帮助我们了解您肠道生态的真实状况 (可多选)",
-                        options: [
-                            { text: "餐后容易腹胀、打嗝、胃气多，感觉食物长时间堵在胃里", score: 1 },
-                            { text: "排便困难、费力，或数日一次（便秘）", score: 1 },
-                            { text: "大便不成形，质地稀烂、粘马桶，或一天多次（腹泻）", score: 1 },
-                            { text: "有烧心、胃酸反流的感觉", score: 1 },
-                            { text: "皮肤容易出现原因不明的湿疹、瘙痒或痤疮", score: 1 },
-                            { text: "食用某些特定食物（如火锅、烧烤、油腻、海鲜食物）后，肠胃明显不适", score: 1 },
-                            { text: "我几乎没有以上任何症状", score: 0 }
-                        ]
-                    }
-                ]
-            },
-            stress: {
-                title: "压力与情绪支柱",
-                intro: "情绪是内心的指南针，压力是生活的背景音。清晰地认知它们，是掌握身心健康主动权的第一步。",
-                questions: [
-                    {
-                        id: "Q22",
-                        type: "single",
-                        category: "standard",
-                        text: "在过去一个月，您感到紧张、担忧，仿佛\"杞人忧天\"的频率有多高？",
-                        options: [
-                            { text: "几乎没有：内心常态是平静、踏实的。", score: 4 },
-                            { text: "有过几天：通常与特定的、可预见的事件相关联。", score: 3 },
-                            { text: "超过一半的时间：担忧似乎成了一种背景音，挥之不去。", score: 2 },
-                            { text: "几乎每天：总是感到紧张，且难以自我控制这种担忧。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q23",
-                        type: "single",
-                        category: "standard",
-                        text: "即使在休息时间（如周末或假期），您是否感觉自己也很难真正地\"松弛\"下来？",
-                        options: [
-                            { text: "完全不会：能够轻松地\"一键切换\"到放松、享受的模式。", score: 4 },
-                            { text: "偶尔会：需要一些时间或仪式（如喝杯酒、看会剧）才能慢慢放松下来。", score: 3 },
-                            { text: "经常如此：身体虽然在休息，但大脑依然高速运转，思绪万千。", score: 2 },
-                            { text: "几乎总是：感觉身体和精神总是处于一种\"紧绷\"或\"警觉\"的状态，无法放松。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q24",
-                        type: "single",
-                        category: "standard",
-                        text: "当面临压力或情绪低落时，您的第一倾向（最常用的方法）是什么？",
-                        options: [
-                            { text: "积极疏导：会主动通过运动、冥想、书写或与人倾诉来处理情绪。", score: 4 },
-                            { text: "转移回避：倾向于投身到工作、家务或爱好中，以暂时忘记烦恼。", score: 3 },
-                            { text: "被动\"麻痹\"：习惯性地通过长时间刷手机、看剧等方式进行被动娱乐，以逃避现实感受。", score: 2 },
-                            { text: "物质慰藉：倾向于通过进食（尤其是甜食或垃圾食品）、饮酒或购物来寻求即时满足。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q25",
-                        type: "single",
-                        category: "standard",
-                        text: "您如何评价自己近一个月的专注力和思维清晰度？",
-                        options: [
-                            { text: "非常清晰：思路敏捷，能长时间保持专注，轻松处理复杂任务。", score: 4 },
-                            { text: "基本正常：大部分时间还好，但在疲劳或压力大时，会感到注意力分散。", score: 3 },
-                            { text: "经常\"脑雾\"：常常感觉思维迟钝、混乱，像隔着一层雾，需要很大努力才能集中精神。", score: 2 },
-                            { text: "严重受损：专注力和记忆力明显下降，已经开始影响到工作效率或日常生活。", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q26",
-                        type: "multiple",
-                        category: "core",
-                        text: "请勾选出所有符合您当前状态的具体表现。(可多选)",
-                        options: [
-                            { text: "神经总是紧绷，容易被小事激惹，对亲近的人没耐心，事后又感到内疚。", score: 1 },
-                            { text: "感觉身体和情绪的被耗尽，对什么都提不起兴趣，只想一个人待着。", score: 1 },
-                            { text: "注意力难以集中，记忆力明显下降。", score: 1 },
-                            { text: "肩颈、后背或下颌（咬肌）长期僵硬紧张，或有不明原因的头痛、心慌。", score: 1 },
-                            { text: "对自己要求很高，害怕犯错，做事前反复思虑，做事后又不停回想，感觉很累。", score: 1 },
-                            { text: "很容易因为他人的评价或事情的不顺利而感到沮丧，怀疑自己的能力和价值。", score: 1 },
-                            { text: "我几乎没有以上任何状态。", score: 0 }
-                        ]
-                     }
-                ]
-            },
-            comprehensive: {
-                title: "综合感受",
-                intro: "",
-                questions: [
-                    {
-                        id: "Q27",
-                        type: "single",
-                        category: "standard",
-                        text: "总体来说，您如何评价自己近一个月的精力水平？",
-                        options: [
-                            { text: "精力充沛，日常活动无明显疲劳", score: 4 },
-                            { text: "精力一般，偶尔感到疲劳", score: 3 },
-                            { text: "精力较差，经常觉得疲惫", score: 2 },
-                            { text: "极度疲惫，没有精力", score: 1 }
-                        ]
-                    },
-                    {
-                        id: "Q28",
-                        type: "single",
-                        category: "standard",
-                        text: "您感觉自己的疲劳感，更多是\"身体上的累\"（如四肢沉重、不想动），还是\"精神上的累\"（如脑子转不动、情绪低落）？",
-                        options: [
-                            { text: "身体上的累为主", score: 3 },
-                            { text: "精神上的累为主", score: 2 },
-                            { text: "两者差不多", score: 1 },
-                            { text: "没什么疲劳感", score: 4 }
-                        ]
-                    },
-                    {
-                        id: "Q29",
-                        type: "single",
-                        category: "standard",
-                        text: "您是否感觉，自己的精力、情绪和睡眠状况会受到生理周期的显著影响？(仅女性用户回答)",
-                        options: [
-                            { text: "是的，影响非常大", score: 1 },
-                            { text: "有一些影响", score: 2 },
-                            { text: "不太确定", score: 3 },
-                            { text: "基本没影响", score: 4 }
-                        ]
-                    }
-                ]
-            }
-        };
-
-        // 全局变量
-        let currentSection = 'sleep';
-        let currentQuestionIndex = 0;
-        let answers = {};
-        let allQuestions = [];
-        let currentQuestionGlobalIndex = 0;
-        
-        // 省市数据
-         const provinceData = {
-             "北京市": ["东城区", "西城区", "朝阳区", "丰台区", "石景山区", "海淀区", "门头沟区", "房山区", "通州区", "顺义区", "昌平区", "大兴区", "怀柔区", "平谷区", "密云区", "延庆区"],
-             "上海市": ["黄浦区", "徐汇区", "长宁区", "静安区", "普陀区", "虹口区", "杨浦区", "闵行区", "宝山区", "嘉定区", "浦东新区", "金山区", "松江区", "青浦区", "奉贤区", "崇明区"],
-             "广东省": ["广州市", "深圳市", "珠海市", "汕头市", "佛山市", "韶关市", "湛江市", "肇庆市", "江门市", "茂名市", "惠州市", "梅州市", "汕尾市", "河源市", "阳江市", "清远市", "东莞市", "中山市", "潮州市", "揭阳市", "云浮市"],
-             "江苏省": ["南京市", "无锡市", "徐州市", "常州市", "苏州市", "南通市", "连云港市", "淮安市", "盐城市", "扬州市", "镇江市", "泰州市", "宿迁市"],
-             "浙江省": ["杭州市", "宁波市", "温州市", "嘉兴市", "湖州市", "绍兴市", "金华市", "衢州市", "舟山市", "台州市", "丽水市"],
-             "山东省": ["济南市", "青岛市", "淄博市", "枣庄市", "东营市", "烟台市", "潍坊市", "济宁市", "泰安市", "威海市", "日照市", "临沂市", "德州市", "聊城市", "滨州市", "菏泽市"],
-             "河南省": ["郑州市", "开封市", "洛阳市", "平顶山市", "安阳市", "鹤壁市", "新乡市", "焦作市", "濮阳市", "许昌市", "漯河市", "三门峡市", "南阳市", "商丘市", "信阳市", "周口市", "驻马店市"],
-             "湖北省": ["武汉市", "黄石市", "十堰市", "宜昌市", "襄阳市", "鄂州市", "荆门市", "孝感市", "荆州市", "黄冈市", "咸宁市", "随州市", "恩施州"],
-             "湖南省": ["长沙市", "株洲市", "湘潭市", "衡阳市", "邵阳市", "岳阳市", "常德市", "张家界市", "益阳市", "郴州市", "永州市", "怀化市", "娄底市", "湘西州"],
-             "四川省": ["成都市", "自贡市", "攀枝花市", "泸州市", "德阳市", "绵阳市", "广元市", "遂宁市", "内江市", "乐山市", "南充市", "眉山市", "宜宾市", "广安市", "达州市", "雅安市", "巴中市", "资阳市"],
-             "河北省": ["石家庄市", "唐山市", "秦皇岛市", "邯郸市", "邢台市", "保定市", "张家口市", "承德市", "沧州市", "廊坊市", "衡水市"],
-             "山西省": ["太原市", "大同市", "阳泉市", "长治市", "晋城市", "朔州市", "晋中市", "运城市", "忻州市", "临汾市", "吕梁市"],
-             "安徽省": ["合肥市", "芜湖市", "蚌埠市", "淮南市", "马鞍山市", "淮北市", "铜陵市", "安庆市", "黄山市", "滁州市", "阜阳市", "宿州市", "六安市", "亳州市", "池州市", "宣城市"],
-             "福建省": ["福州市", "厦门市", "莆田市", "三明市", "泉州市", "漳州市", "南平市", "龙岩市", "宁德市"],
-             "江西省": ["南昌市", "景德镇市", "萍乡市", "九江市", "新余市", "鹰潭市", "赣州市", "吉安市", "宜春市", "抚州市", "上饶市"],
-             "辽宁省": ["沈阳市", "大连市", "鞍山市", "抚顺市", "本溪市", "丹东市", "锦州市", "营口市", "阜新市", "辽阳市", "盘锦市", "铁岭市", "朝阳市", "葫芦岛市"],
-             "吉林省": ["长春市", "吉林市", "四平市", "辽源市", "通化市", "白山市", "松原市", "白城市", "延边州"],
-             "黑龙江省": ["哈尔滨市", "齐齐哈尔市", "鸡西市", "鹤岗市", "双鸭山市", "大庆市", "伊春市", "佳木斯市", "七台河市", "牡丹江市", "黑河市", "绥化市", "大兴安岭地区"],
-             "陕西省": ["西安市", "铜川市", "宝鸡市", "咸阳市", "渭南市", "延安市", "汉中市", "榆林市", "安康市", "商洛市"],
-             "甘肃省": ["兰州市", "嘉峪关市", "金昌市", "白银市", "天水市", "武威市", "张掖市", "平凉市", "酒泉市", "庆阳市", "定西市", "陇南市", "临夏州", "甘南州"],
-             "青海省": ["西宁市", "海东市", "海北州", "黄南州", "海南州", "果洛州", "玉树州", "海西州"],
-             "宁夏回族自治区": ["银川市", "石嘴山市", "吴忠市", "固原市", "中卫市"],
-             "新疆维吾尔自治区": ["乌鲁木齐市", "克拉玛依市", "吐鲁番市", "哈密市", "昌吉州", "博尔塔拉州", "巴音郭楞州", "阿克苏地区", "克孜勒苏州", "喀什地区", "和田地区", "伊犁州", "塔城地区", "阿勒泰地区"],
-             "西藏自治区": ["拉萨市", "日喀则市", "昌都市", "林芝市", "山南市", "那曲市", "阿里地区"],
-             "内蒙古自治区": ["呼和浩特市", "包头市", "乌海市", "赤峰市", "通辽市", "鄂尔多斯市", "呼伦贝尔市", "巴彦淖尔市", "乌兰察布市", "兴安盟", "锡林郭勒盟", "阿拉善盟"],
-             "广西壮族自治区": ["南宁市", "柳州市", "桂林市", "梧州市", "北海市", "防城港市", "钦州市", "贵港市", "玉林市", "百色市", "贺州市", "河池市", "来宾市", "崇左市"],
-             "云南省": ["昆明市", "曲靖市", "玉溪市", "保山市", "昭通市", "丽江市", "普洱市", "临沧市", "楚雄州", "红河州", "文山州", "西双版纳州", "大理州", "德宏州", "怒江州", "迪庆州"],
-             "贵州省": ["贵阳市", "六盘水市", "遵义市", "安顺市", "毕节市", "铜仁市", "黔西南州", "黔东南州", "黔南州"],
-             "海南省": ["海口市", "三亚市", "三沙市", "儋州市", "五指山市", "琼海市", "文昌市", "万宁市", "东方市", "定安县", "屯昌县", "澄迈县", "临高县", "白沙县", "昌江县", "乐东县", "陵水县", "保亭县", "琼中县"],
-             "台湾省": ["台北市", "新北市", "桃园市", "台中市", "台南市", "高雄市", "基隆市", "新竹市", "嘉义市", "新竹县", "苗栗县", "彰化县", "南投县", "云林县", "嘉义县", "屏东县", "宜兰县", "花莲县", "台东县", "澎湖县", "金门县", "连江县"],
-             "香港特别行政区": ["中西区", "湾仔区", "东区", "南区", "油尖旺区", "深水埗区", "九龙城区", "黄大仙区", "观塘区", "荃湾区", "屯门区", "元朗区", "北区", "大埔区", "沙田区", "西贡区", "葵青区", "离岛区"],
-             "澳门特别行政区": ["澳门半岛", "氹仔", "路环"]
-         };
-
-        // 初始化省份选项
-         function initProvinces() {
-             const provinceSelect = document.getElementById('province');
-             Object.keys(provinceData).forEach(province => {
-                 const option = document.createElement('option');
-                 option.value = province;
-                 option.textContent = province;
-                 provinceSelect.appendChild(option);
-             });
-         }
-
-         // 更新城市选项
-         function updateCities() {
-             const provinceSelect = document.getElementById('province');
-             const citySelect = document.getElementById('city');
-             const selectedProvince = provinceSelect.value;
-             
-             // 清空城市选项
-             citySelect.innerHTML = '<option value="">请选择城市</option>';
-             
-             if (selectedProvince && provinceData[selectedProvince]) {
-                 provinceData[selectedProvince].forEach(city => {
-                     const option = document.createElement('option');
-                     option.value = city;
-                     option.textContent = city;
-                     citySelect.appendChild(option);
-                 });
-             }
-         }
-
-         // 初始化出生年份选项
-         function initBirthYears() {
-             const birthYearSelect = document.getElementById('birth-year');
-             for (let year = 2005; year >= 1965; year--) {
-                 const option = document.createElement('option');
-                 option.value = year;
-                 option.textContent = year + '年';
-                 if (year === 1985) {
-                     option.selected = true;
-                 }
-                 birthYearSelect.appendChild(option);
-             }
-         }
-
-         // 初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            // 初始化出生年份选项
-            initBirthYears();
-            // 初始化省份选项
-            initProvinces();
+        document.getElementById('healthForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // 扁平化所有问题
-            Object.keys(questionnaire).forEach(sectionKey => {
-                questionnaire[sectionKey].questions.forEach(question => {
-                    question.section = sectionKey;
-                    allQuestions.push(question);
-                });
-            });
-            
-            updateProgress();
-        });
-
-        // 开始测试（从介绍页面到基本信息页面）
-        function startTest() {
-            document.getElementById('introPage').classList.add('hidden');
-            document.getElementById('basicInfoPage').classList.remove('hidden');
-            updateProgress();
-        }
-
-        // 更新进度条
-        function updateProgress() {
-            const totalSteps = allQuestions.length + 3; // 包括介绍页面、基本信息和结果页面
-            let currentStep = 0;
-            
-            if (!document.getElementById('introPage').classList.contains('hidden')) {
-                currentStep = 1;
-            } else if (!document.getElementById('basicInfoPage').classList.contains('hidden')) {
-                currentStep = 2;
-            } else if (!document.getElementById('resultsPage').classList.contains('hidden')) {
-                currentStep = totalSteps;
-            } else {
-                currentStep = currentQuestionGlobalIndex + 3;
-            }
-            
-            const progress = (currentStep / totalSteps) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-        }
-
-        // 下一页（从基本信息到问卷）
-        function nextPage() {
-            // 验证基本信息
-            const birthYear = document.getElementById('birth-year').value;
-            const gender = document.getElementById('gender').value;
-            const province = document.getElementById('province').value;
-            const city = document.getElementById('city').value;
-            const occupation = document.getElementById('occupation').value;
-            const maritalStatus = document.getElementById('marital-status').value;
-            
-            if (!birthYear || !gender || !province || !city || !occupation || !maritalStatus) {
-                alert('请填写完整的基本信息');
-                return;
-            }
-            
-            // 计算年龄
-            const currentYear = new Date().getFullYear();
-            const age = currentYear - parseInt(birthYear);
-            
-            // 保存基本信息
-            answers.basicInfo = { birthYear, age, gender, province, city, occupation, maritalStatus };
-            
-            // 切换到问卷页面
-            document.getElementById('basicInfoPage').classList.add('hidden');
-            document.getElementById('questionnairePage').classList.remove('hidden');
-            
-            // 显示第一个问题
-            showQuestion();
-            updateProgress();
-        }
-
-        // 显示当前问题
-        function showQuestion() {
-            const question = allQuestions[currentQuestionGlobalIndex];
-            const container = document.getElementById('questionContainer');
-            
-            // 更新章节标题
-            document.getElementById('currentSectionTitle').textContent = questionnaire[question.section].title;
-            
-            // 构建问题HTML
-            let html = `
-                <div class="question">
-                    <div class="question-title">${question.text}</div>
-                    <div class="question-type">${question.type === 'single' ? '单选题' : '多选题'}</div>
-                    <div class="options">
-            `;
-            
-            question.options.forEach((option, index) => {
-                const inputType = question.type === 'single' ? 'radio' : 'checkbox';
-                const inputName = question.type === 'single' ? question.id : `${question.id}_${index}`;
-                const isChecked = answers[question.id] && 
-                    (question.type === 'single' ? 
-                        answers[question.id] === index : 
-                        answers[question.id].includes(index));
+            // 检查是否所有题目都已回答
+            const unansweredQuestion = checkAllQuestionsAnswered();
+            if (unansweredQuestion) {
+                // 根据题目编号找到对应的问题元素
+                let questionElement;
+                const questionNumber = unansweredQuestion.substring(1);
                 
-                html += `
-                    <div class="option ${isChecked ? 'selected' : ''}" onclick="selectOption('${question.id}', ${index}, '${question.type}')">
-                        <input type="${inputType}" name="${inputName}" value="${index}" ${isChecked ? 'checked' : ''}>
-                        <span>${option.text}</span>
-                    </div>
-                `;
-            });
-            
-            html += `
-                    </div>
-                </div>
-            `;
-            
-            container.innerHTML = html;
-            
-            // 如果是多选题，更新UI状态（包括禁用状态）
-            if (question.type === 'multiple') {
-                updateMultipleChoiceUI(question.id, question);
-            }
-            
-            // 更新导航按钮
-            document.getElementById('prevBtn').style.display = currentQuestionGlobalIndex > 0 ? 'block' : 'none';
-            document.getElementById('nextBtn').textContent = 
-                currentQuestionGlobalIndex === allQuestions.length - 1 ? '查看结果' : '下一题';
-        }
-
-        // 选择选项
-        function selectOption(questionId, optionIndex, type) {
-            if (type === 'single') {
-                answers[questionId] = optionIndex;
-                // 更新UI
-                document.querySelectorAll(`input[name="${questionId}"]`).forEach((input, index) => {
-                    const option = input.closest('.option');
-                    if (index === optionIndex) {
-                        input.checked = true;
-                        option.classList.add('selected');
-                    } else {
-                        input.checked = false;
-                        option.classList.remove('selected');
-                    }
-                });
-            } else {
-                if (!answers[questionId]) {
-                    answers[questionId] = [];
-                }
-                
-                const currentQuestion = allQuestions.find(q => q.id === questionId);
-                const lastOptionIndex = currentQuestion.options.length - 1;
-                const isLastOption = optionIndex === lastOptionIndex;
-                const lastOptionText = currentQuestion.options[lastOptionIndex].text;
-                const isNoneOption = lastOptionText.includes('我几乎没有以上任何');
-                
-                // 检查点击的选项是否被禁用
-                const clickedOptionElement = document.querySelector(`input[name="${questionId}_${optionIndex}"]`).closest('.option');
-                if (clickedOptionElement.classList.contains('disabled')) {
-                    return; // 如果选项被禁用，直接返回，不执行任何操作
-                }
-                
-                // 如果是"我几乎没有以上任何"选项
-                if (isLastOption && isNoneOption) {
-                    if (answers[questionId].includes(optionIndex)) {
-                        // 取消选择"我几乎没有以上任何"选项
-                        answers[questionId] = answers[questionId].filter(idx => idx !== optionIndex);
-                    } else {
-                        // 选择"我几乎没有以上任何"选项，清除其他所有选项
-                        answers[questionId] = [optionIndex];
+                if (parseInt(questionNumber) <= 5) {
+                    // Q1-Q5基础信息题目
+                    const questionNumberElements = document.querySelectorAll('.question-number');
+                    for (let element of questionNumberElements) {
+                        if (element.textContent.includes(`Q${questionNumber}.`)) {
+                            questionElement = element.closest('.question');
+                            break;
+                        }
                     }
                 } else {
-                    // 选择其他选项时，如果"我几乎没有以上任何"已被选中，则先清除它
-                    if (!isNoneOption && answers[questionId].includes(lastOptionIndex)) {
-                        answers[questionId] = answers[questionId].filter(idx => idx !== lastOptionIndex);
+                    // Q6-Q29评分题目
+                    const inputElement = document.querySelector(`[name="${unansweredQuestion}"]`);
+                    if (inputElement) {
+                        questionElement = inputElement.closest('.question');
                     }
+                }
+                
+                if (questionElement) {
+                    questionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     
-                    const index = answers[questionId].indexOf(optionIndex);
-                    if (index > -1) {
-                        answers[questionId].splice(index, 1);
-                    } else {
-                        answers[questionId].push(optionIndex);
-                    }
+                    // 高亮显示未回答的题目
+                    questionElement.style.border = '2px solid #ff4444';
+                    questionElement.style.borderRadius = '10px';
+                    questionElement.style.padding = '15px';
+                    
+                    setTimeout(() => {
+                        questionElement.style.border = '';
+                        questionElement.style.borderRadius = '';
+                        questionElement.style.padding = '';
+                    }, 3000);
                 }
                 
-                // 更新所有选项的UI状态和禁用状态
-                updateMultipleChoiceUI(questionId, currentQuestion);
-            }
-        }
-        
-        // 更新多选题的UI状态
-        function updateMultipleChoiceUI(questionId, currentQuestion) {
-            const lastOptionIndex = currentQuestion.options.length - 1;
-            const lastOptionText = currentQuestion.options[lastOptionIndex].text;
-            const isNoneOption = lastOptionText.includes('我几乎没有以上任何');
-            
-            // 检查是否有其他选项被选中（除了"我几乎没有以上任何"选项）
-            const hasOtherOptionsSelected = answers[questionId] && answers[questionId].some(idx => idx !== lastOptionIndex);
-            
-            currentQuestion.options.forEach((option, idx) => {
-                const input = document.querySelector(`input[name="${questionId}_${idx}"]`);
-                const optionElement = input.closest('.option');
-                
-                // 更新选中状态
-                if (answers[questionId] && answers[questionId].includes(idx)) {
-                    input.checked = true;
-                    optionElement.classList.add('selected');
-                } else {
-                    input.checked = false;
-                    optionElement.classList.remove('selected');
-                }
-                
-                // 更新禁用状态
-                if (isNoneOption && idx === lastOptionIndex && hasOtherOptionsSelected) {
-                    // 如果有其他选项被选中，禁用"我几乎没有以上任何"选项
-                    optionElement.classList.add('disabled');
-                    input.disabled = true;
-                } else {
-                    // 其他情况下移除禁用状态
-                    optionElement.classList.remove('disabled');
-                    input.disabled = false;
-                }
-            });
-        }
-
-        // 下一题
-        function nextQuestion() {
-            const currentQuestion = allQuestions[currentQuestionGlobalIndex];
-            
-            // 验证是否已回答
-            if (answers[currentQuestion.id] === undefined || answers[currentQuestion.id] === null || 
-                (Array.isArray(answers[currentQuestion.id]) && answers[currentQuestion.id].length === 0)) {
-                alert('请回答当前问题后再继续');
+                alert(`请回答第${questionNumber}题后再提交评估`);
                 return;
             }
             
-            if (currentQuestionGlobalIndex < allQuestions.length - 1) {
-                currentQuestionGlobalIndex++;
-                showQuestion();
-                updateProgress();
-            } else {
-                // 显示结果
-                showResults();
+            // 收集所有答案
+            const formData = new FormData(this);
+            const answers = {};
+            
+            for (let [key, value] of formData.entries()) {
+                answers[key] = value;
             }
-        }
-
-        // 上一题
-        function prevQuestion() {
-            if (currentQuestionGlobalIndex > 0) {
-                currentQuestionGlobalIndex--;
-                showQuestion();
-                updateProgress();
+            
+            // 计算各模块得分
+            const results = calculateScores(answers);
+            
+            // 显示结果
+            displayResults(results);
+            
+            // 滚动到结果区域
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        function checkAllQuestionsAnswered() {
+            // 检查基础信息字段
+            const basicFields = [
+                { name: 'gender', questionNumber: 1 },
+                { name: 'birth_year', questionNumber: 2 },
+                { name: 'province', questionNumber: 3 },
+                { name: 'city', questionNumber: 3 },
+                { name: 'job_status', questionNumber: 4 },
+                { name: 'marriage_status', questionNumber: 5 }
+            ];
+            
+            for (let field of basicFields) {
+                const element = document.querySelector(`[name="${field.name}"]`);
+                if (element) {
+                    if (element.type === 'radio') {
+                        const checked = document.querySelector(`input[name="${field.name}"]:checked`);
+                        if (!checked) {
+                            return `q${field.questionNumber}`;
+                        }
+                    } else if (element.tagName === 'SELECT') {
+                        if (!element.value) {
+                            return `q${field.questionNumber}`;
+                        }
+                    }
+                }
             }
+            
+            // 检查Q6-Q29（评分题目）
+            for (let i = 6; i <= 29; i++) {
+                const questionName = `q${i}`;
+                const answered = document.querySelector(`input[name="${questionName}"]:checked`);
+                if (!answered) {
+                    return questionName;
+                }
+            }
+            return null;
         }
-
-        // 计算结果
-        function calculateResults() {
-            const pillarScores = {
-                sleep: 0,
-                exercise: 0,
-                nutrition: 0,
-                gut: 0,
-                stress: 0
+        
+        function calculateScores(answers) {
+            const modules = {
+                emotion: {
+                    name: '情绪与精力',
+                    questions: ['q6', 'q7', 'q8', 'q9', 'q10', 'q11'],
+                    minScore: 6,
+                    maxScore: 30
+                },
+                sleep: {
+                    name: '睡眠',
+                    questions: ['q12', 'q13', 'q14', 'q15', 'q16', 'q17'],
+                    minScore: 6,
+                    maxScore: 30
+                },
+                gut: {
+                    name: '肠道',
+                    questions: ['q18', 'q19', 'q20', 'q21', 'q22', 'q23'],
+                    minScore: 6,
+                    maxScore: 30
+                },
+                nutrition: {
+                    name: '营养',
+                    questions: ['q24', 'q25', 'q26'],
+                    minScore: 3,
+                    maxScore: 15
+                },
+                exercise: {
+                    name: '运动',
+                    questions: ['q27', 'q28', 'q29'],
+                    minScore: 3,
+                    maxScore: 15
+                }
             };
             
-            const pillarMaxScores = {
-                sleep: 25,  // Q6(4) + Q7(4) + Q8(4) + Q9(4) + Q10(9) = 25分
-                exercise: 17, // Q11(4) + Q12(4) + Q13(9) = 17分
-                nutrition: 17, // Q14(4) + Q15(4) + Q16(9) = 17分
-                gut: 25,    // Q17(4) + Q18(4) + Q19(4) + Q20(4) + Q21(9) = 25分
-                stress: 25  // Q22(4) + Q23(4) + Q24(4) + Q25(4) + Q26(9) = 25分
-            };
+            const results = {};
             
-            // 计算各支柱得分（跳过comprehensive支柱）
-            allQuestions.forEach(question => {
-                // 跳过综合感受部分，不计分
-                if (question.section === 'comprehensive') {
-                    return;
+            for (let [moduleKey, module] of Object.entries(modules)) {
+                let rawScore = 0;
+                
+                // 计算原始分数
+                for (let question of module.questions) {
+                    rawScore += parseInt(answers[question] || 0);
                 }
                 
-                const answer = answers[question.id];
-                let score = 0;
+                // 计算健康度 (0-100)
+                const healthScore = ((rawScore - module.minScore) / (module.maxScore - module.minScore)) * 100;
                 
-                if (question.type === 'single') {
-                    if (answer !== undefined) {
-                        score = question.options[answer].score;
-                    }
+                // 确定等级和描述
+                let level, description, statusClass;
+                
+                if (healthScore >= 90) {
+                    level = '状态极佳';
+                    statusClass = 'status-excellent';
+                    description = getExcellentDescription(moduleKey);
+                } else if (healthScore >= 75) {
+                    level = '状态良好';
+                    statusClass = 'status-good';
+                    description = getGoodDescription(moduleKey);
+                } else if (healthScore >= 60) {
+                    level = '待改善';
+                    statusClass = 'status-needs-improvement';
+                    description = getNeedsImprovementDescription(moduleKey);
                 } else {
-                    // 多选题处理
-                    if (answer && Array.isArray(answer)) {
-                        if (question.category === 'core') {
-                            // 核心诊断题：症状负荷反向计分法
-                            // 检查是否选择了"我几乎没有以上任何问题/症状"
-                            const noSymptomsIndex = question.options.findIndex(opt => 
-                                opt.text.includes('我几乎没有以上任何') || opt.score === 0
-                            );
-                            
-                            if (answer.includes(noSymptomsIndex)) {
-                                // 选择了"无症状"选项，得满分
-                                score = 9;
-                            } else {
-                                // 根据选择的症状数量反向计分
-                                const symptomCount = answer.length;
-                                if (symptomCount === 1) score = 7.5;
-                                else if (symptomCount === 2) score = 6;
-                                else if (symptomCount === 3) score = 4.5;
-                                else if (symptomCount === 4) score = 3;
-                                else if (symptomCount === 5) score = 1.5;
-                                else if (symptomCount >= 6) score = 0;
-                                else score = 9; // 未选择任何选项
-                            }
-                        } else {
-                            // 普通多选题：累加分数
-                            answer.forEach(optionIndex => {
-                                score += question.options[optionIndex].score;
-                            });
-                        }
-                    }
+                    level = '警报状态';
+                    statusClass = 'status-warning';
+                    description = getWarningDescription(moduleKey);
                 }
                 
-                pillarScores[question.section] += score;
-            });
-            
-            // 计算百分比
-            const pillarPercentages = {};
-            Object.keys(pillarScores).forEach(pillar => {
-                pillarPercentages[pillar] = Math.round((pillarScores[pillar] / pillarMaxScores[pillar]) * 100);
-            });
-            
-            // 计算总体健康度
-            const totalScore = Object.values(pillarScores).reduce((sum, score) => sum + score, 0);
-            const totalMaxScore = Object.values(pillarMaxScores).reduce((sum, score) => sum + score, 0);
-            const overallHealthPercentage = Math.round((totalScore / totalMaxScore) * 100);
-            
-            // 确定健康等级
-            let healthLevel = '';
-            if (overallHealthPercentage >= 90) {
-                healthLevel = '状态极佳';
-            } else if (overallHealthPercentage >= 75) {
-                healthLevel = '状态良好';
-            } else if (overallHealthPercentage >= 60) {
-                healthLevel = '待改善';
-            } else if (overallHealthPercentage >= 40) {
-                healthLevel = '警报状态';
-            } else {
-                healthLevel = '急需干预';
-            }
-            
-            // 生成个性化建议
-            const recommendations = generateRecommendations(pillarPercentages, answers);
-            
-            return {
-                pillarScores,
-                pillarPercentages,
-                overallHealthPercentage,
-                healthLevel,
-                recommendations,
-                timestamp: new Date().toLocaleString('zh-CN'),
-                basicInfo: answers.basicInfo,
-                maxScores: pillarMaxScores
-            };
-        }
-
-        // 生成个性化建议
-        function generateRecommendations(percentages, userAnswers) {
-            const recommendations = [];
-            
-            // 找出得分最低的支柱
-            const sortedPillars = Object.entries(percentages).sort((a, b) => a[1] - b[1]);
-            
-            const pillarNames = {
-                sleep: '睡眠',
-                exercise: '运动',
-                nutrition: '营养',
-                gut: '肠道健康',
-                stress: '压力管理'
-            };
-            
-            // 为每个支柱提供详细的得分解读和建议
-            Object.entries(percentages).forEach(([pillar, score]) => {
-                const detailedAdvice = getDetailedPillarAdvice(pillar, score, userAnswers);
-                recommendations.push({
-                    title: `${pillarNames[pillar]}支柱 (${score}%)`,
-                    content: detailedAdvice
-                });
-            });
-            
-            // 添加综合建议
-            const overallAdvice = getOverallAdvice(percentages, sortedPillars);
-            recommendations.push({
-                title: '综合改善建议',
-                content: overallAdvice
-            });
-            
-            return recommendations;
-        }
-
-        // 获取详细的支柱建议
-        function getDetailedPillarAdvice(pillar, score, userAnswers) {
-            let advice = '';
-            
-            // 得分解读
-            if (score >= 90) {
-                advice += `<strong>🌟 优秀水平</strong><br>您在${pillar === 'sleep' ? '睡眠' : pillar === 'exercise' ? '运动' : pillar === 'nutrition' ? '营养' : pillar === 'gut' ? '肠道健康' : '压力管理'}方面表现优秀！`;
-            } else if (score >= 75) {
-                advice += `<strong>✅ 良好水平</strong><br>您在${pillar === 'sleep' ? '睡眠' : pillar === 'exercise' ? '运动' : pillar === 'nutrition' ? '营养' : pillar === 'gut' ? '肠道健康' : '压力管理'}方面表现良好，有进一步提升的空间。`;
-            } else if (score >= 60) {
-                advice += `<strong>⚠️ 需要改善</strong><br>您在${pillar === 'sleep' ? '睡眠' : pillar === 'exercise' ? '运动' : pillar === 'nutrition' ? '营养' : pillar === 'gut' ? '肠道健康' : '压力管理'}方面需要重点关注和改善。`;
-            } else if (score >= 40) {
-                advice += `<strong>🚨 警报状态</strong><br>您在${pillar === 'sleep' ? '睡眠' : pillar === 'exercise' ? '运动' : pillar === 'nutrition' ? '营养' : pillar === 'gut' ? '肠道健康' : '压力管理'}方面存在明显问题，需要立即采取行动。`;
-            } else {
-                advice += `<strong>🆘 急需干预</strong><br>您在${pillar === 'sleep' ? '睡眠' : pillar === 'exercise' ? '运动' : pillar === 'nutrition' ? '营养' : pillar === 'gut' ? '肠道健康' : '压力管理'}方面急需专业指导和系统性改善。`;
-            }
-            
-            advice += '<br><br>';
-            
-            // 根据具体支柱提供详细建议
-            switch(pillar) {
-                case 'sleep':
-                    advice += getSleepAdvice(score, userAnswers);
-                    break;
-                case 'exercise':
-                    advice += getExerciseAdvice(score, userAnswers);
-                    break;
-                case 'nutrition':
-                    advice += getNutritionAdvice(score, userAnswers);
-                    break;
-                case 'gut':
-                    advice += getGutAdvice(score, userAnswers);
-                    break;
-                case 'stress':
-                    advice += getStressAdvice(score, userAnswers);
-                    break;
-            }
-            
-            return advice;
-        }
-        
-        // 睡眠建议
-        function getSleepAdvice(score, userAnswers) {
-            let advice = '<strong>具体建议：</strong><br>';
-            if (score >= 75) {
-                advice += '• 继续保持规律的作息时间<br>• 优化睡眠环境（温度、光线、噪音）<br>• 建立放松的睡前仪式';
-            } else {
-                advice += '• 建立固定的睡觉和起床时间<br>• 睡前1小时避免电子设备<br>• 创造舒适的睡眠环境<br>• 避免睡前大量进食和饮酒<br>• 考虑放松技巧如冥想或深呼吸';
-            }
-            return advice;
-        }
-        
-        // 运动建议
-        function getExerciseAdvice(score, userAnswers) {
-            let advice = '<strong>具体建议：</strong><br>';
-            if (score >= 75) {
-                advice += '• 继续保持现有运动习惯<br>• 尝试增加运动的多样性<br>• 适当增加力量训练';
-            } else {
-                advice += '• 从每周2-3次30分钟中等强度运动开始<br>• 选择喜欢的运动形式（如快走、游泳、跳舞）<br>• 增加日常活动量（爬楼梯、步行上班）<br>• 设定可实现的小目标<br>• 寻找运动伙伴增加动力';
-            }
-            return advice;
-        }
-        
-        // 营养建议
-        function getNutritionAdvice(score, userAnswers) {
-            let advice = '<strong>具体建议：</strong><br>';
-            if (score >= 75) {
-                advice += '• 继续保持均衡饮食<br>• 注意食物多样性<br>• 适量补充优质脂肪';
-            } else {
-                advice += '• 确保每餐包含蛋白质、蔬菜和复合碳水<br>• 减少加工食品和含糖饮料<br>• 增加蔬菜水果摄入量<br>• 规律用餐时间<br>• 充足饮水（每天1.5-2升）';
-            }
-            return advice;
-        }
-        
-        // 肠道健康建议
-        function getGutAdvice(score, userAnswers) {
-            let advice = '<strong>具体建议：</strong><br>';
-            if (score >= 75) {
-                advice += '• 继续摄入发酵食品<br>• 保持膳食纤维摄入<br>• 注意食物不耐受';
-            } else {
-                advice += '• 增加发酵食品（酸奶、泡菜、纳豆）<br>• 多吃富含膳食纤维的食物<br>• 减少高度加工食品<br>• 注意食物过敏原<br>• 管理压力以改善肠道功能';
-            }
-            return advice;
-        }
-        
-        // 压力管理建议
-        function getStressAdvice(score, userAnswers) {
-            let advice = '<strong>具体建议：</strong><br>';
-            if (score >= 75) {
-                advice += '• 继续保持良好的压力管理习惯<br>• 定期进行放松活动<br>• 保持工作生活平衡';
-            } else {
-                advice += '• 学习压力管理技巧（深呼吸、冥想）<br>• 建立规律的放松时间<br>• 适当运动释放压力<br>• 寻求社会支持<br>• 必要时考虑专业心理咨询';
-            }
-            return advice;
-        }
-        
-        // 综合建议
-        function getOverallAdvice(percentages, sortedPillars) {
-            const lowestPillar = sortedPillars[0];
-            const highestPillar = sortedPillars[sortedPillars.length - 1];
-            
-            let advice = `<strong>优先改善重点：</strong>${lowestPillar[0] === 'sleep' ? '睡眠' : lowestPillar[0] === 'exercise' ? '运动' : lowestPillar[0] === 'nutrition' ? '营养' : lowestPillar[0] === 'gut' ? '肠道健康' : '压力管理'}支柱（${lowestPillar[1]}%）<br><br>`;
-            
-            advice += `<strong>保持优势：</strong>${highestPillar[0] === 'sleep' ? '睡眠' : highestPillar[0] === 'exercise' ? '运动' : highestPillar[0] === 'nutrition' ? '营养' : highestPillar[0] === 'gut' ? '肠道健康' : '压力管理'}支柱表现最佳（${highestPillar[1]}%）<br><br>`;
-            
-            advice += '<strong>整体建议：</strong><br>';
-            advice += '• 健康是一个整体系统，各支柱相互影响<br>';
-            advice += '• 建议从得分最低的支柱开始改善<br>';
-            advice += '• 设定小目标，循序渐进<br>';
-            advice += '• 定期重新评估，跟踪进展<br>';
-            advice += '• 必要时寻求专业指导';
-            
-            return advice;
-        }
-
-        // 创建雷达图
-        function createRadarChart(pillarPercentages) {
-            const ctx = document.getElementById('healthRadarChart').getContext('2d');
-            
-            // 销毁之前的图表实例（如果存在）
-            if (window.healthChart) {
-                window.healthChart.destroy();
-            }
-            
-            const data = {
-                labels: ['睡眠', '运动', '营养', '肠道健康', '压力管理'],
-                datasets: [{
-                    label: '健康得分',
-                    data: [
-                        pillarPercentages.sleep,
-                        pillarPercentages.exercise,
-                        pillarPercentages.nutrition,
-                        pillarPercentages.gut,
-                        pillarPercentages.stress
-                    ],
-                    backgroundColor: 'rgba(102, 126, 234, 0.2)',
-                    borderColor: 'rgba(102, 126, 234, 1)',
-                    borderWidth: 2,
-                    pointBackgroundColor: 'rgba(102, 126, 234, 1)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgba(102, 126, 234, 1)',
-                    pointRadius: 6,
-                    pointHoverRadius: 8
-                }]
-            };
-            
-            const config = {
-                type: 'radar',
-                data: data,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    scales: {
-                        r: {
-                            beginAtZero: true,
-                            max: 100,
-                            min: 0,
-                            ticks: {
-                                stepSize: 20,
-                                font: {
-                                    size: 12
-                                },
-                                color: '#6b7280'
-                            },
-                            grid: {
-                                color: '#e5e7eb'
-                            },
-                            angleLines: {
-                                color: '#e5e7eb'
-                            },
-                            pointLabels: {
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                },
-                                color: '#374151'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return context.label + ': ' + context.parsed.r + '%';
-                                }
-                            }
-                        }
-                    }
-                }
-            };
-            
-            window.healthChart = new Chart(ctx, config);
-        }
-        
-        // 显示结果
-        function showResults() {
-            const results = calculateResults();
-            
-            // 保存结果到本地存储
-            const savedReports = JSON.parse(localStorage.getItem('healthReports') || '[]');
-            savedReports.push(results);
-            localStorage.setItem('healthReports', JSON.stringify(savedReports));
-            
-            // 切换到结果页面
-            document.getElementById('questionnairePage').classList.add('hidden');
-            document.getElementById('resultsPage').classList.remove('hidden');
-            
-            // 显示总体得分
-            document.getElementById('overallScore').textContent = results.overallHealthPercentage + '%';
-            
-            // 显示健康等级
-            const healthLevelElement = document.getElementById('healthLevel');
-            healthLevelElement.textContent = results.healthLevel;
-            
-            // 设置健康等级颜色
-            const levelColors = {
-                '状态极佳': '#10b981',
-                '状态良好': '#3b82f6',
-                '待改善': '#f59e0b',
-                '警报状态': '#ef4444',
-                '急需干预': '#dc2626'
-            };
-            healthLevelElement.style.backgroundColor = levelColors[results.healthLevel] || '#6b7280';
-            healthLevelElement.style.color = 'white';
-            
-            // 显示各支柱得分
-            const pillarScoresContainer = document.getElementById('pillarScores');
-            const pillarNames = {
-                sleep: '睡眠',
-                exercise: '运动',
-                nutrition: '营养',
-                gut: '肠道健康',
-                stress: '压力管理'
-            };
-            
-            let pillarHTML = '';
-            Object.keys(results.pillarPercentages).forEach(pillar => {
-                const percentage = results.pillarPercentages[pillar];
-                const score = results.pillarScores[pillar];
-                const maxScore = results.maxScores[pillar];
-                
-                pillarHTML += `
-                    <div class="pillar-card">
-                        <div class="pillar-name">${pillarNames[pillar]}</div>
-                        <div class="pillar-score">${score}/${maxScore}分 (${percentage}%)</div>
-                    </div>
-                `;
-            });
-            pillarScoresContainer.innerHTML = pillarHTML;
-            
-            // 创建雷达图
-            createRadarChart(results.pillarPercentages);
-            
-            // 显示建议
-            const recommendationsContainer = document.getElementById('recommendations');
-            let recommendationsHTML = '<h3>个性化改善建议</h3>';
-            results.recommendations.forEach(rec => {
-                recommendationsHTML += `
-                    <div class="recommendation-item">
-                        <div class="recommendation-title">${rec.title}</div>
-                        <div>${rec.content}</div>
-                    </div>
-                `;
-            });
-            recommendationsContainer.innerHTML = recommendationsHTML;
-            
-            updateProgress();
-        }
-
-        // 导出PDF
-        function exportToPDF() {
-            try {
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                
-                // 设置中文字体（使用系统默认字体）
-                doc.setFont('helvetica');
-                
-                // 添加标题
-                doc.setFontSize(20);
-                doc.text('Health Assessment Report', 20, 30);
-                
-                // 添加基本信息
-                doc.setFontSize(12);
-                const basicInfo = answers.basicInfo;
-                doc.text(`Birth Year: ${basicInfo.birthYear}`, 20, 50);
-                doc.text(`Age: ${basicInfo.age}`, 20, 60);
-                doc.text(`Gender: ${basicInfo.gender}`, 20, 70);
-                doc.text(`Location: ${basicInfo.province} ${basicInfo.city}`, 20, 80);
-                doc.text(`Occupation: ${basicInfo.occupation}`, 20, 90);
-                doc.text(`Marital Status: ${basicInfo.maritalStatus}`, 20, 100);
-                
-                // 添加评估结果
-                const results = calculateResults();
-                doc.text(`Overall Health: ${results.overallHealthPercentage}%`, 20, 120);
-                doc.text(`Health Level: ${results.healthLevel}`, 20, 130);
-                
-                // 添加各支柱得分
-                let yPos = 150;
-                doc.text('Pillar Scores:', 20, yPos);
-                yPos += 10;
-                
-                const pillarNames = {
-                    sleep: 'Sleep',
-                    exercise: 'Exercise', 
-                    nutrition: 'Nutrition',
-                    gut: 'Gut Health',
-                    stress: 'Stress Management'
+                results[moduleKey] = {
+                    name: module.name,
+                    rawScore: rawScore,
+                    healthScore: Math.round(healthScore),
+                    level: level,
+                    description: description,
+                    statusClass: statusClass
                 };
-                
-                Object.keys(results.pillarScores).forEach(pillar => {
-                    const score = results.pillarScores[pillar];
-                    const maxScore = results.maxScores[pillar];
-                    const percentage = results.pillarPercentages[pillar];
-                    doc.text(`${pillarNames[pillar]}: ${score}/${maxScore} (${percentage}%)`, 30, yPos);
-                    yPos += 10;
-                });
-                
-                // 保存PDF
-                doc.save(`health-assessment-${new Date().toISOString().split('T')[0]}.pdf`);
-            } catch (error) {
-                console.error('PDF export failed:', error);
-                alert('PDF导出失败，将为您导出JSON格式的数据');
-                exportToJSON();
             }
-        }
-
-        // 导出JSON
-        function exportToJSON() {
-            const results = calculateResults();
-            const dataStr = JSON.stringify(results, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
             
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = `health-assessment-${new Date().toISOString().split('T')[0]}.json`;
-            link.click();
+            return results;
         }
-
-        // 重新测试
-        function restartTest() {
-            if (confirm('确定要重新开始测试吗？当前的答案将会丢失。')) {
-                // 重置所有变量
-                currentQuestionGlobalIndex = 0;
-                answers = {};
-                
-                // 重置页面显示
-                document.getElementById('resultsPage').classList.add('hidden');
-                document.getElementById('questionnairePage').classList.add('hidden');
-                document.getElementById('basicInfoPage').classList.remove('hidden');
-                
-                // 清空基本信息表单
-                document.getElementById('birth-year').value = '';
-                document.getElementById('gender').value = '';
-                document.getElementById('province').value = '';
-                document.getElementById('city').value = '';
-                document.getElementById('occupation').value = '';
-                document.getElementById('marital-status').value = '';
-                
-                // 重置城市选项
-                document.getElementById('city').innerHTML = '<option value="">请先选择省份</option>';
-                
-                updateProgress();
-            }
-        }
-    </script>
-</body>
-</html>
+        
+        function getExcellentDescription(moduleKey) {
+             const descriptions = {
+                 emotion: ' 【状态解读】：恭喜您，您的情绪与精力是您最宝贵的财富！这代表您的情绪与精力极佳，能灵活地在‘工作’与‘生活’间灵活切换，展现出了强大的心理韧性。<br><br>【保持建议】：为了主动为让您的情绪与精力变得更好，建议您每周安排一次能让您全心投入并感到快乐的‘心流’活动中，这将是您应对未来压力的最佳缓冲。',
+                 sleep: ' 【状态解读】：“您的睡眠质量堪称典范。这意味着您的大脑‘淋巴系统’能在夜间高效地清除代谢废物，身体也能完成深度的生理修复，这是您维持日间巅峰状态的根本。<br><br>【保持建议】：“请继续守护这份宝贵的健康资产。当面临出差或短期压力时，可尝试在睡前进行10分钟的舒缓伸展或补充镁元素，以保护睡眠质量不被轻易撼动。”',
+                 gut: ' 【状态解读】：“您拥有一个强大而和谐的‘肠道内在生态系统’。平衡的菌群、完整的肠道屏障，是您强大免疫力、稳定情绪和清透皮肤的坚实后盾。”【保持建议】：“为了让您的肠道更加健康，建议您在饮食中引入更多样化的发酵食品，为肠道菌群带去更多有益的‘伙伴’。”',
+                 nutrition: ' 【状态解读】：“太棒了！您在饮食上是一位真正的‘智慧生活家’。您不仅懂得如何选择滋养身体的食物，更拥有一个平和、愉悦的进食心态，这是非常理想的可持续健康状态。”【保持建议】：“在您出色的基础上，可以尝试探索‘食物的季节性’，多食用当季的本地食材，让您的营养摄入更贴近自然节律，体验饮食带来的全新乐趣。”',
+                 exercise: ' 【状态解读】：“您的身体是一座充满活力的神殿！您真正地享受着活动身体所带来的力量感、轻松感和愉悦感，这是非常令人向往的状态。”【保持建议】：“为了增加趣味性和挑战性，不妨尝试学习一项新的运动技能，比如一种新的舞蹈、球类运动或户外探索，让运动的乐趣持续焕新。”'
+             };
+             return descriptions[moduleKey];
+         }
+         
+         function getGoodDescription(moduleKey) {
+             const descriptions = {
+                 emotion: ' 【状态解读】：“您的身心能量系统基础稳固，但在应对持续或叠加的压力时，可能会感到疲劳、精力不足。<br><br>【改善建议】：“建议您练习‘情绪刹车’。当感到烦躁或压力上头时，暂停2分钟，做3次深长的腹式呼吸。这个微小的习惯能有效避免情绪的过度消耗。如需更专业的能量管理技巧，我们的顾问可以为您提供帮助。”',
+                 sleep: ' 【状态解读】：“您的睡眠能完成大部分的‘夜间修复’任务，但报告显示还有提升空间。【改善建议】：“建议您建立一个‘数字日落’仪式。在睡前1小时，有意识地将手机、电脑等电子屏幕的亮度调至最低，并开启夜览模式，为褪黑素的自然分泌创造条件。想了解更多提升睡眠深度的方法，欢迎与我们的顾问探讨。”',
+                 gut: '【状态解读】：“您的肠道功能整体健康，但偶尔的‘小脾气’（如胀气、排便不佳）提示，您的‘内在生态’比较敏感，稳定性还有提升空间。”【改善建议】：“建议您引入‘益生元’来喂养您的有益菌。例如，本周尝试在您的早餐中加入一勺燕麦或亚麻籽粉，观察腹部的舒适度变化。想了解更适合您体质的肠道养护方案，欢迎咨询我们的顾问。”',
+                 nutrition: ' 【状态解读】：“您在健康饮食的道路上已经走得很稳，拥有非常好的饮食框架。报告显示，在某些细节上，比如餐盘的搭配均衡或应对情绪性进食方面，稍作调整就能让您感觉更好。”【改善建议】：“这是一个很棒的起点！作为一个小挑战，建议您本周尝试在午餐和晚餐中，有意识地让蔬菜的种类和颜色比上周更丰富一点。如果需要简单、高效的营养补充来支持您的目标，我们的顾问很乐意为您提供一些轻松的建议。”',
+                 exercise: ' 【状态解读】：“您已经是一位积极的‘健康活动者’，拥有不错的运动基础。您的身体已经能从规律的活动中受益，稍加优化就能获得更大的回报。”【改善建议】：“在您现有运动的基础上，建议增加一些‘身体唤醒’小习惯，比如清晨起床后进行5分钟的动态拉伸。这将帮助您更快地开启一天的活力。想了解更多碎片化运动技巧吗？我们的顾问有很多有趣的建议。”'
+             };
+             return descriptions[moduleKey];
+         }
+         
+         function getNeedsImprovementDescription(moduleKey) {
+              const descriptions = {
+                  emotion: ' 【状态解读】：“您的身心能量系统已发出‘需要警觉’的信号。‘心累’、‘脑雾’、‘易怒’，这些感受的背后，可能指向了长期的压力荷尔蒙（皮质醇）失衡，您的身体正处于持续的‘内耗’状态。”【改善建议】：“要打破这种‘内耗’循环，需要从身体以及心理层面给予精准支持。建议您与我们的专业顾问联系，以获得专业的改善建议。”',
+                  sleep: ' 【状态解读】：“您的睡眠系统已发出“黄灯”信号。您可能时常经历‘无效睡眠’——明明睡了，却像没睡一样。这种‘睡眠债务’的累积，是导致白天精力不济、情绪不稳和渴望高热量食物的隐形推手。”【改善建议】：要提升睡眠质量，需要改善睡眠的‘深度’和‘连续性’。我们的‘深度睡眠支持’系列产品，富含天然的放松成分，能帮助您的神经系统更快进入休息模式。建议您与我们的专业顾问联系，了解它如何能帮助您改善现状。”',
+                  gut: ' 【状态解读】：“您的肠道正频繁地向您发出改善信号。消化、排便或食物耐受方面的问题，说明您的‘内在生态’可能已经失衡，并可能因此引发了身体的慢性炎症，值得您认真对待。”【改善建议】：“要改善肠道环境，首先要‘安抚’它。我们的专利菌与益生元组合产品，可以帮您有效改善肠道健康，建议您与我们的专业顾问联系，了解如何开始您的肠道修复之旅。”',
+                  nutrition: ' 【状态解读】：“在如今这个遍布美食诱惑和外卖便利的时代，要做到健康饮食确实是一项挑战。您的得分显示，您可能时常会在‘应该吃什么’和‘当下想吃什么’之间挣扎。这没关系，找到一个简单、可持续的改善路径是关键。”【改善建议】：“我们不提倡严苛的节食，而是从一个微小的‘加法’开始。建议您本周只专注于一件事：每天吃够两拳大小的蔬菜。先不必在意其他。如果您希望在调整期获得更全面的营养保障，我们的基础营养补充系列，能像‘健康保底’一样为您提供支持。欢迎咨询我们的顾问。”',
+                  exercise: ' 【状态解读】：“在忙碌的生活中，运动常常是第一个被牺牲的选项，这我们非常理解。让我们一起探索如何用最轻松的方式，重新点燃它的‘引擎’。【改善建议】：“我们建议您从“舒适区”开始。找到一种您“不讨厌”的活动，哪怕只是散步，目标是本周完成2次，每次15分钟。让身体重新熟悉“动起来”的感觉是第一要务。如果您感觉启动困难，我们的能量支持配方，或许能为您提供一些助力。欢迎随时咨询。”'
+              };
+              return descriptions[moduleKey];
+          }
+          
+          function getWarningDescription(moduleKey) {
+              const descriptions = {
+                  emotion: ' 【状态解读】：“警报！ 您的情绪与精力已成为您健康的核心短板，需要立刻、重点进行改善。报告显示，您的身心系统可能已长期处于不健康状态。<br><br>【改善建议】：“这是一个需要高度重视的信号。要重建您的身心能量系统，需要全面且专业的干预。我们强烈建议您立即与我们的专业健康顾问进行一次深度沟通。他们将为您剖析问题的根源，并为您匹配最适合的‘产品+生活方式’整合改善方案，这是您走出困境、重获活力的第一步。”',
+                  sleep: ' 【状态解读】：“警报！ 您的睡眠问题已成为您整体健康的重点，需要立刻、重点进行改善。【改善建议】：“这是一个必须严肃对待的健康警报。改善睡眠需要全面、专业的策略。我们强烈建议您立即与我们的专业健康顾问进行一次深度沟通。他们将为您匹配最适合的‘产品+生活方式’整合改善方案，帮助您夺回宁静的夜晚。”',
+                  gut: ' 【状态解读】：“警报！ 您的肠道健康已成为您整体健康的薄弱环节，需要立刻、重点进行改善。持续的消化道症状，强烈提示您的肠道屏障功能可能已经受损（即‘肠漏’），并可能因此成为您全身慢性炎症的‘策源地’。”【改善建议】：“这是一个需要从根源解决的问题。系统性的肠道修复刻不容缓。我们强烈建议您立即与我们的专业健康顾问进行一次深度沟通。他们将为您匹配最适合的‘产品+生活方式’整合改善方案，帮助您重建强大的‘内在防线’。”',
+                  nutrition: '【状态解读】：“看到这个分数，请不要感到压力或自责。很多时候，不理想的饮食习惯，只是身体能量不足或压力过大的‘求救信号’。这并非意志力问题，而是生理问题。我们可以把它看作是一个清晰的起点，一个邀请我们去更好地照顾自己的机会。”【改善建议】：“让我们从最善意、最简单的一步开始。本周，请您专注于：保证每天喝足1.5升白水。仅此一件事。水分是新陈代谢的基石，做到了就是巨大的成功。在您开启这段旅程时，我们的专业顾问非常乐意为您提供陪伴和支持，帮助您找到最适合您的节奏。我们的营养产品也能为您提供便捷的‘第一推动力’。”',
+                  exercise: '【状态解读】：“在一个鼓励我们久坐的世界里，维持身体的活动度本身就是一场‘逆流而上’的战斗。看到这个分数，请不要有任何包袱。这不代表‘失败’，而是代表一个巨大的‘机会’——您每微小的一步，都将为身体带来超乎想象的回报。”【改善建议】：“让我们开启一段“无压力运动”之旅。本周，我们唯一的目标是：每天有意识地多走500步（约等于多散步5分钟）。您可以通过手机计步轻松实现。这是最善意、最可持续的开始。在您的起步阶段，我们的专业顾问非常乐意为您加油打气，并提供必要的支持，让改变变得更轻松。”'
+              };
+              return descriptions[moduleKey];
+          }
+          
+          function displayResults(results) {
+              const resultsDiv = document.getElementById('results');
+              const resultsContent = document.getElementById('resultsContent');
+              
+              let html = '';
+              
+              for (let [moduleKey, result] of Object.entries(results)) {
+                  html += `
+                      <div class="module-result ${result.statusClass}">
+                          <h3>${result.name}</h3>
+                          <div class="progress-bar">
+                              <div class="progress-fill" style="width: ${result.healthScore}%"></div>
+                          </div>
+                          <div class="score-display">${result.healthScore}分 - ${result.level}</div>
+                          <p>${result.description}</p>
+                      </div>
+                  `;
+              }
+              
+              resultsContent.innerHTML = html;
+              resultsDiv.style.display = 'block';
+              
+              // 创建雷达图
+              createRadarChart(results);
+          }
+          
+          function createRadarChart(results) {
+              const ctx = document.getElementById('radarChart').getContext('2d');
+              
+              // 准备数据
+              const labels = [];
+              const data = [];
+              const backgroundColors = [];
+              const borderColors = [];
+              
+              for (let [moduleKey, result] of Object.entries(results)) {
+                  labels.push(result.name);
+                  data.push(result.healthScore);
+                  
+                  // 根据分数设置颜色
+                  if (result.healthScore >= 90) {
+                      backgroundColors.push('rgba(46, 125, 50, 0.2)');
+                      borderColors.push('rgba(46, 125, 50, 1)');
+                  } else if (result.healthScore >= 75) {
+                      backgroundColors.push('rgba(25, 118, 210, 0.2)');
+                      borderColors.push('rgba(25, 118, 210, 1)');
+                  } else if (result.healthScore >= 60) {
+                      backgroundColors.push('rgba(245, 124, 0, 0.2)');
+                      borderColors.push('rgba(245, 124, 0, 1)');
+                  } else {
+                      backgroundColors.push('rgba(211, 47, 47, 0.2)');
+                      borderColors.push('rgba(211, 47, 47, 1)');
+                  }
+              }
+              
+              // 销毁现有图表（如果存在）
+              if (window.healthRadarChart) {
+                  window.healthRadarChart.destroy();
+              }
+              
+              // 创建新图表
+              window.healthRadarChart = new Chart(ctx, {
+                  type: 'radar',
+                  data: {
+                      labels: labels,
+                      datasets: [{
+                          label: '健康评分',
+                          data: data,
+                          backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                          borderColor: 'rgba(102, 126, 234, 1)',
+                          borderWidth: 2,
+                          pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                          pointBorderColor: '#fff',
+                          pointHoverBackgroundColor: '#fff',
+                          pointHoverBorderColor: 'rgba(102, 126, 234, 1)',
+                          pointRadius: 6,
+                          pointHoverRadius: 8
+                      }]
+                  },
+                  options: {
+                      responsive: true,
+                      maintainAspectRatio: true,
+                      plugins: {
+                          legend: {
+                              display: false
+                          }
+                      },
+                      scales: {
+                          r: {
+                              beginAtZero: true,
+                              max: 100,
+                              min: 0,
+                              ticks: {
+                                  stepSize: 20,
+                                  font: {
+                                      size: 12
+                                  },
+                                  color: '#666'
+                              },
+                              grid: {
+                                  color: 'rgba(0, 0, 0, 0.1)'
+                              },
+                              angleLines: {
+                                  color: 'rgba(0, 0, 0, 0.1)'
+                              },
+                              pointLabels: {
+                                  font: {
+                                      size: 14,
+                                      weight: 'bold'
+                                  },
+                                  color: '#333'
+                              }
+                          }
+                      }
+                  }
+              });
+          }
+          
+          // 省份-城市联动数据
+          const cityData = {
+              '北京市': ['东城区', '西城区', '朝阳区', '丰台区', '石景山区', '海淀区', '门头沟区', '房山区', '通州区', '顺义区', '昌平区', '大兴区', '怀柔区', '平谷区', '密云区', '延庆区'],
+              '天津市': ['和平区', '河东区', '河西区', '南开区', '河北区', '红桥区', '东丽区', '西青区', '津南区', '北辰区', '武清区', '宝坻区', '滨海新区', '宁河区', '静海区', '蓟州区'],
+              '上海市': ['黄浦区', '徐汇区', '长宁区', '静安区', '普陀区', '虹口区', '杨浦区', '闵行区', '宝山区', '嘉定区', '浦东新区', '金山区', '松江区', '青浦区', '奉贤区', '崇明区'],
+              '重庆市': ['万州区', '涪陵区', '渝中区', '大渡口区', '江北区', '沙坪坝区', '九龙坡区', '南岸区', '北碚区', '綦江区', '大足区', '渝北区', '巴南区', '黔江区', '长寿区', '江津区', '合川区', '永川区', '南川区', '璧山区', '铜梁区', '潼南区', '荣昌区', '开州区', '梁平区', '武隆区'],
+              '河北省': ['石家庄市', '唐山市', '秦皇岛市', '邯郸市', '邢台市', '保定市', '张家口市', '承德市', '沧州市', '廊坊市', '衡水市'],
+              '山西省': ['太原市', '大同市', '阳泉市', '长治市', '晋城市', '朔州市', '晋中市', '运城市', '忻州市', '临汾市', '吕梁市'],
+              '辽宁省': ['沈阳市', '大连市', '鞍山市', '抚顺市', '本溪市', '丹东市', '锦州市', '营口市', '阜新市', '辽阳市', '盘锦市', '铁岭市', '朝阳市', '葫芦岛市'],
+              '吉林省': ['长春市', '吉林市', '四平市', '辽源市', '通化市', '白山市', '松原市', '白城市', '延边朝鲜族自治州'],
+              '黑龙江省': ['哈尔滨市', '齐齐哈尔市', '鸡西市', '鹤岗市', '双鸭山市', '大庆市', '伊春市', '佳木斯市', '七台河市', '牡丹江市', '黑河市', '绥化市', '大兴安岭地区'],
+              '江苏省': ['南京市', '无锡市', '徐州市', '常州市', '苏州市', '南通市', '连云港市', '淮安市', '盐城市', '扬州市', '镇江市', '泰州市', '宿迁市'],
+              '浙江省': ['杭州市', '宁波市', '温州市', '嘉兴市', '湖州市', '绍兴市', '金华市', '衢州市', '舟山市', '台州市', '丽水市'],
+              '安徽省': ['合肥市', '芜湖市', '蚌埠市', '淮南市', '马鞍山市', '淮北市', '铜陵市', '安庆市', '黄山市', '滁州市', '阜阳市', '宿州市', '六安市', '亳州市', '池州市', '宣城市'],
+              '福建省': ['福州市', '厦门市', '莆田市', '三明市', '泉州市', '漳州市', '南平市', '龙岩市', '宁德市'],
+              '江西省': ['南昌市', '景德镇市', '萍乡市', '九江市', '新余市', '鹰潭市', '赣州市', '吉安市', '宜春市', '抚州市', '上饶市'],
+              '山东省': ['济南市', '青岛市', '淄博市', '枣庄市', '东营市', '烟台市', '潍坊市', '济宁市', '泰安市', '威海市', '日照市', '临沂市', '德州市', '聊城市', '滨州市', '菏泽市'],
+              '河南省': ['郑州市', '开封市', '洛阳市', '平顶山市', '安阳市', '鹤壁市', '新乡市', '焦作市', '濮阳市', '许昌市', '漯河市', '三门峡市', '南阳市', '商丘市', '信阳市', '周口市', '驻马店市', '济源市'],
+              '湖北省': ['武汉市', '黄石市', '十堰市', '宜昌市', '襄阳市', '鄂州市', '荆门市', '孝感市', '荆州市', '黄冈市', '咸宁市', '随州市', '恩施土家族苗族自治州', '仙桃市', '潜江市', '天门市', '神农架林区'],
+              '湖南省': ['长沙市', '株洲市', '湘潭市', '衡阳市', '邵阳市', '岳阳市', '常德市', '张家界市', '益阳市', '郴州市', '永州市', '怀化市', '娄底市', '湘西土家族苗族自治州'],
+              '广东省': ['广州市', '韶关市', '深圳市', '珠海市', '汕头市', '佛山市', '江门市', '湛江市', '茂名市', '肇庆市', '惠州市', '梅州市', '汕尾市', '河源市', '阳江市', '清远市', '东莞市', '中山市', '潮州市', '揭阳市', '云浮市'],
+              '海南省': ['海口市', '三亚市', '三沙市', '儋州市', '五指山市', '琼海市', '文昌市', '万宁市', '东方市', '定安县', '屯昌县', '澄迈县', '临高县', '白沙黎族自治县', '昌江黎族自治县', '乐东黎族自治县', '陵水黎族自治县', '保亭黎族苗族自治县', '琼中黎族苗族自治县'],
+              '四川省': ['成都市', '自贡市', '攀枝花市', '泸州市', '德阳市', '绵阳市', '广元市', '遂宁市', '内江市', '乐山市', '南充市', '眉山市', '宜宾市', '广安市', '达州市', '雅安市', '巴中市', '资阳市', '阿坝藏族羌族自治州', '甘孜藏族自治州', '凉山彝族自治州'],
+              '贵州省': ['贵阳市', '六盘水市', '遵义市', '安顺市', '毕节市', '铜仁市', '黔西南布依族苗族自治州', '黔东南苗族侗族自治州', '黔南布依族苗族自治州'],
+              '云南省': ['昆明市', '曲靖市', '玉溪市', '保山市', '昭通市', '丽江市', '普洱市', '临沧市', '楚雄彝族自治州', '红河哈尼族彝族自治州', '文山壮族苗族自治州', '西双版纳傣族自治州', '大理白族自治州', '德宏傣族景颇族自治州', '怒江傈僳族自治州', '迪庆藏族自治州'],
+              '陕西省': ['西安市', '铜川市', '宝鸡市', '咸阳市', '渭南市', '延安市', '汉中市', '榆林市', '安康市', '商洛市'],
+              '甘肃省': ['兰州市', '嘉峪关市', '金昌市', '白银市', '天水市', '武威市', '张掖市', '平凉市', '酒泉市', '庆阳市', '定西市', '陇南市', '临夏回族自治州', '甘南藏族自治州'],
+              '青海省': ['西宁市', '海东市', '海北藏族自治州', '黄南藏族自治州', '海南藏族自治州', '果洛藏族自治州', '玉树藏族自治州', '海西蒙古族藏族自治州'],
+              '台湾省': ['台北市', '新北市', '桃园市', '台中市', '台南市', '高雄市', '基隆市', '新竹市', '嘉义市', '新竹县', '苗栗县', '彰化县', '南投县', '云林县', '嘉义县', '屏东县', '宜兰县', '花莲县', '台东县', '澎湖县', '金门县', '连江县'],
+              '内蒙古自治区': ['呼和浩特市', '包头市', '乌海市', '赤峰市', '通辽市', '鄂尔多斯市', '呼伦贝尔市', '巴彦淖尔市', '乌兰察布市', '兴安盟', '锡林郭勒盟', '阿拉善盟'],
+              '广西壮族自治区': ['南宁市', '柳州市', '桂林市', '梧州市', '北海市', '防城港市', '钦州市', '贵港市', '玉林市', '百色市', '贺州市', '河池市', '来宾市', '崇左市'],
+              '西藏自治区': ['拉萨市', '日喀则市', '昌都市', '林芝市', '山南市', '那曲市', '阿里地区'],
+              '宁夏回族自治区': ['银川市', '石嘴山市', '吴忠市', '固原市', '中卫市'],
+              '新疆维吾尔自治区': ['乌鲁木齐市', '克拉玛依市', '吐鲁番市', '哈密市', '昌吉回族自治州', '博尔塔拉蒙古自治州', '巴音郭楞蒙古自治州', '阿克苏地区', '克孜勒苏柯尔克孜自治州', '喀什地区', '和田地区', '伊犁哈萨克自治州', '塔城地区', '阿勒泰地区'],
+              '香港特别行政区': ['中西区', '湾仔区', '东区', '南区', '油尖旺区', '深水埗区', '九龙城区', '黄大仙区', '观塘区', '荃湾区', '屯门区', '元朗区', '北区', '大埔区', '沙田区', '西贡区', '葵青区', '离岛区'],
+              '澳门特别行政区': ['澳门半岛', '氹仔', '路环']
+          };
+          
+          // 省份-城市联动功能
+          document.addEventListener('DOMContentLoaded', function() {
+              const provinceSelect = document.getElementById('provinceSelect');
+              const citySelect = document.getElementById('citySelect');
+              
+              provinceSelect.addEventListener('change', function() {
+                  const selectedProvince = this.value;
+                  
+                  // 清空城市选择
+                  citySelect.innerHTML = '<option value="">请选择城市</option>';
+                  
+                  if (selectedProvince && cityData[selectedProvince]) {
+                      // 启用城市选择
+                      citySelect.disabled = false;
+                      
+                      // 添加城市选项
+                      cityData[selectedProvince].forEach(city => {
+                          const option = document.createElement('option');
+                          option.value = city;
+                          option.textContent = city;
+                          citySelect.appendChild(option);
+                      });
+                  } else {
+                      // 禁用城市选择
+                      citySelect.disabled = true;
+                      citySelect.innerHTML = '<option value="">请先选择省份</option>';
+                  }
+              });
+          });
+      </script>
+  </body>
+  </html>
