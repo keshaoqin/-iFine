@@ -3,7 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>时悦轻养 - 核心健康评估问卷</title>
+    <title>Say I Fine - 专业健康评估问卷 | 身心健康全面检测</title>
+    <meta name="description" content="Say I Fine专业健康评估问卷，基于生活方式医学理念，全面评估睡眠、运动、营养、肠道健康及情绪精力五大健康支柱，生成个性化健康报告。">
+    <meta name="keywords" content="健康评估,健康问卷,生活方式医学,睡眠质量,运动健康,营养评估,肠道健康,情绪管理,健康检测">
+    <meta name="author" content="Say I Fine">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Say I Fine - 专业健康评估问卷">
+    <meta property="og:description" content="基于生活方式医学的专业健康评估，全面检测您的身心健康状态">
+    <meta property="og:url" content="https://sayifine.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Say I Fine - 专业健康评估问卷">
+    <meta property="twitter:description" content="基于生活方式医学的专业健康评估，全面检测您的身心健康状态">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Performance & Security -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/chart.js" as="script">
+    
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="msapplication-TileColor" content="#667eea">
     <style>
         * {
             margin: 0;
@@ -12,11 +49,31 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-attachment: fixed;
             min-height: 100vh;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container {
@@ -27,24 +84,59 @@
 
         .header {
             text-align: center;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.1),
+                0 1px 0px rgba(255,255,255,0.8) inset,
+                0 -1px 0px rgba(0,0,0,0.05) inset;
             margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         .header h1 {
-            color: #667eea;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 16px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            position: relative;
+            z-index: 1;
         }
 
         .header p {
-            color: #666;
-            font-size: 1.1em;
-            margin-bottom: 20px;
+            color: #64748b;
+            font-size: 1.2em;
+            margin-bottom: 24px;
+            font-weight: 500;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
         }
 
         .scoring-guide {
@@ -82,14 +174,29 @@
         }
 
         .questionnaire {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.1),
+                0 1px 0px rgba(255,255,255,0.8) inset,
+                0 -1px 0px rgba(0,0,0,0.05) inset;
             overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
         }
 
         .module {
             border-bottom: 1px solid #eee;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .module.active {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .module:last-child {
@@ -97,24 +204,80 @@
         }
 
         .module-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             color: white;
-            padding: 25px 30px;
-            font-size: 1.3em;
-            font-weight: 600;
+            padding: 32px 40px;
+            font-size: 1.4em;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .module-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .module-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
         }
 
         .module-intro {
-            background: #f8f9ff;
-            padding: 20px 30px;
-            font-style: italic;
-            color: #666;
-            border-left: 4px solid #667eea;
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+            padding: 24px 40px;
+            font-style: normal;
+            color: #64748b;
+            border-left: 4px solid transparent;
+            border-image: linear-gradient(135deg, #667eea, #764ba2) 1;
+            position: relative;
+            font-weight: 500;
+            line-height: 1.7;
+        }
+        
+        .module-intro::before {
+            content: '💡';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
         }
 
         .question {
-            padding: 25px 30px;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 32px 40px;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            background: rgba(255, 255, 255, 0.8);
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .question::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .question:hover::before {
+            opacity: 1;
         }
 
         .question:last-child {
@@ -122,111 +285,174 @@
         }
 
         .question-text {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-            color: #333;
+            font-size: 1.2em;
+            margin-bottom: 24px;
+            color: #1e293b;
             line-height: 1.6;
+            font-weight: 600;
+            letter-spacing: -0.01em;
         }
 
         .question-number {
-            color: #667eea;
-            font-weight: bold;
-            margin-right: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            margin-right: 12px;
+            font-size: 1.1em;
         }
 
         .options {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: flex !important;
+            gap: 2px !important;
+            flex-wrap: nowrap !important;
+            justify-content: space-between !important;
+            align-items: stretch !important;
+            width: 100% !important;
+            flex-direction: row !important;
         }
 
         .option {
-            flex: 0 1 auto;
-            min-width: 120px;
-            max-width: 160px;
+            flex: 1 !important;
+            width: calc(20% - 1.6px) !important;
+            min-width: calc(20% - 1.6px) !important;
+            max-width: calc(20% - 1.6px) !important;
+            display: inline-block !important;
         }
 
         .option input[type="radio"] {
-            display: none;
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .option input[type="radio"]:focus + label {
+            outline: 3px solid #667eea;
+            outline-offset: 2px;
+        }
+        
+        .option input[type="radio"]:focus:not(:focus-visible) + label {
+            outline: none;
         }
 
         .option label {
             display: flex;
-            flex-direction: column;
-            padding: 12px 15px;
-            background: #f8f9ff;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 0.72em;
-            line-height: 1.3;
-            white-space: normal;
-            position: relative;
-            min-height: 80px;
+            flex-direction: row;
             align-items: center;
             justify-content: center;
+            padding: 16px 12px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%);
+            border: 2px solid rgba(226, 232, 240, 0.6);
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-size: 0.95em;
+            line-height: 1.4;
+            white-space: nowrap;
+            position: relative;
+            min-height: 68px;
+            color: #475569;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .option label::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
         }
 
         .option input[type="radio"]:checked + label {
-            background: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             color: white;
-            border-color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            border-color: transparent;
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 
+                0 12px 32px rgba(102, 126, 234, 0.4),
+                0 4px 16px rgba(118, 75, 162, 0.3),
+                0 0 0 1px rgba(255,255,255,0.1) inset;
+            z-index: 2;
+        }
+        
+        .option input[type="radio"]:checked + label::after {
+            left: 100%;
         }
 
         .option label:hover {
-            border-color: #667eea;
-            transform: translateY(-1px);
+            border-color: rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px) scale(1.01);
+            background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(240,242,247,0.98) 100%);
+            box-shadow: 
+                0 8px 24px rgba(102, 126, 234, 0.15),
+                0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .option label:hover::after {
+            left: 100%;
+        }
+        
+        .option input[type="radio"]:checked + label:hover {
+            transform: translateY(-5px) scale(1.04);
+            box-shadow: 
+                0 16px 40px rgba(102, 126, 234, 0.5),
+                0 6px 20px rgba(118, 75, 162, 0.4),
+                0 0 0 1px rgba(255,255,255,0.2) inset;
         }
 
         .option label[for$="_1"]:before {
-            content: "1分";
-            display: block;
-            font-size: 0.96em;
+            content: "1分 ";
+            display: inline;
+            font-size: 1em;
             font-weight: 700;
             color: #667eea;
-            margin-bottom: 8px;
+            margin-right: 4px;
         }
 
         .option label[for$="_2"]:before {
-            content: "2分";
-            display: block;
-            font-size: 0.96em;
+            content: "2分 ";
+            display: inline;
+            font-size: 1em;
             font-weight: 700;
             color: #667eea;
-            margin-bottom: 8px;
+            margin-right: 4px;
         }
 
         .option label[for$="_3"]:before {
-            content: "3分";
-            display: block;
-            font-size: 0.96em;
+            content: "3分 ";
+            display: inline;
+            font-size: 1em;
             font-weight: 700;
             color: #667eea;
-            margin-bottom: 8px;
+            margin-right: 4px;
         }
 
         .option label[for$="_4"]:before {
-            content: "4分";
-            display: block;
-            font-size: 0.96em;
+            content: "4分 ";
+            display: inline;
+            font-size: 1em;
             font-weight: 700;
             color: #667eea;
-            margin-bottom: 8px;
+            margin-right: 4px;
         }
 
         .option label[for$="_5"]:before {
-            content: "5分";
-            display: block;
-            font-size: 0.96em;
+            content: "5分 ";
+            display: inline;
+            font-size: 1em;
             font-weight: 700;
             color: #667eea;
-            margin-bottom: 8px;
+            margin-right: 4px;
         }
 
         .option label[for$="_1"]:after,
@@ -235,6 +461,42 @@
         .option label[for$="_4"]:after,
         .option label[for$="_5"]:after {
             display: none;
+        }
+
+        /* 手机端优化 */
+        @media (max-width: 768px) {
+            .options {
+                gap: 1px !important;
+            }
+            
+            .option {
+                width: calc(20% - 0.8px) !important;
+                min-width: calc(20% - 0.8px) !important;
+                max-width: calc(20% - 0.8px) !important;
+            }
+            
+            .option label {
+                padding: 8px 4px !important;
+                font-size: 0.75em !important;
+                min-height: 45px !important;
+                height: auto !important;
+                border-radius: 6px !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: center !important;
+                white-space: nowrap !important;
+            }
+            
+            .option label[for$="_1"]:before,
+            .option label[for$="_2"]:before,
+            .option label[for$="_3"]:before,
+            .option label[for$="_4"]:before,
+            .option label[for$="_5"]:before {
+                font-size: 0.9em !important;
+                margin-right: 3px !important;
+                margin-bottom: 0 !important;
+                display: inline !important;
+            }
         }
 
         .option input[type="radio"]:checked + label[for$="_1"]:before,
@@ -295,22 +557,72 @@
         }
 
         .submit-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             color: white;
-            padding: 15px 40px;
+            padding: 18px 36px;
             border: none;
-            border-radius: 50px;
-            font-size: 1.2em;
-            font-weight: 600;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 700;
             cursor: pointer;
-            margin: 30px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            margin: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 8px 24px rgba(102, 126, 234, 0.3),
+                0 2px 8px rgba(118, 75, 162, 0.2),
+                0 0 0 1px rgba(255,255,255,0.1) inset;
+            min-width: 140px;
+            text-align: center;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.95em;
+        }
+        
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .submit-btn.loading {
+            pointer-events: none;
+        }
+        
+        .submit-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            margin: auto;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 12px 32px rgba(102, 126, 234, 0.4),
+                0 4px 16px rgba(118, 75, 162, 0.3),
+                0 0 0 1px rgba(255,255,255,0.2) inset;
         }
 
         .submit-btn:disabled {
@@ -320,12 +632,19 @@
         }
 
         .results {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.1),
+                0 1px 0px rgba(255,255,255,0.8) inset,
+                0 -1px 0px rgba(0,0,0,0.05) inset;
+            padding: 40px;
             margin-top: 30px;
             display: none;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
         }
         
         .results-container {
@@ -356,28 +675,55 @@
         }
 
         .results h2 {
-            color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 2em;
+            margin-bottom: 40px;
+            font-size: 2.2em;
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
 
         .module-result {
-            margin-bottom: 25px;
-            padding: 20px;
-            border-radius: 15px;
-            border-left: 5px solid #667eea;
+            margin-bottom: 32px;
+            padding: 28px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .module-result::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
         }
 
         .module-result h3 {
-            color: #333;
-            margin-bottom: 10px;
+            color: #1e293b;
+            margin-bottom: 16px;
+            font-size: 1.3em;
+            font-weight: 700;
+            letter-spacing: -0.01em;
         }
 
         .score-display {
-            font-size: 2em;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-size: 2.4em;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
         }
 
         .status-excellent { background: #e8f5e8; color: #2e7d32; }
@@ -397,116 +743,222 @@
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #667eea, #764ba2);
-            transition: width 0.5s ease;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(
+                -45deg,
+                rgba(255, 255, 255, .2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, .2) 50%,
+                rgba(255, 255, 255, .2) 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 50px 50px;
+            animation: move 2s linear infinite;
+        }
+        
+        @keyframes move {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 50px 50px;
+            }
+        }
+        
+        /* Toast 通知样式 */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 300px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.warning {
+            border-left-color: #ff9800;
+        }
+        
+        .toast.success {
+            border-left-color: #4caf50;
+        }
+        
+        .toast.error {
+            border-left-color: #f44336;
+        }
+        
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .toast.warning .toast-icon {
+            background: #ff9800;
+        }
+        
+        .toast.success .toast-icon {
+            background: #4caf50;
+        }
+        
+        .toast.error .toast-icon {
+            background: #f44336;
+        }
+        
+        .toast-message {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.4;
         }
 
-        /* Q22 布里斯托大便分类法特殊样式 */
-        .question:has(input[name="q22"]) .option {
-            transition: all 0.3s ease;
-        }
-        
-        .question:has(input[name="q22"]) .option:hover {
-            border-color: #667eea !important;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
-            transform: translateY(-2px);
-        }
-        
-        .question:has(input[name="q22"]) .option:has(input:checked) {
-            border-color: #667eea !important;
-            background-color: #f8f9ff !important;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-        }
-        
-        .question:has(input[name="q22"]) .option label {
-            cursor: pointer;
-            font-weight: 500;
-        }
-        
-        .question:has(input[name="q22"]) .option:has(input:checked) label {
-            color: #667eea;
-        }
+
 
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .results-container {
-                 gap: 20px;
-             }
-             
-             .radar-chart-container {
-                 order: 1;
-             }
-             
-             #radarChart {
-                 max-width: 100%;
-             }
-            
+            .container { padding: 15px; }
+            .results-container { gap: 20px; }
+            .radar-chart-container { order: 1; }
+            #radarChart { max-width: 100%; }
             .options {
-                flex-direction: column;
-                align-items: center;
-                gap: 12px;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 4px !important;
+                justify-content: space-between !important;
+                align-items: stretch !important;
+                width: 100% !important;
+                padding: 0 5px;
             }
-            
             .option {
-                min-width: 280px;
-                max-width: 320px;
+                flex: 1 !important;
+                width: auto !important;
+                min-width: 0 !important;
+                max-width: none !important;
+                display: flex !important;
             }
-            
             .option label {
-                padding: 18px 25px;
-                font-size: 0.95em;
+                width: 100% !important;
+                padding: 14px 6px !important;
+                font-size: 0.8em !important;
+                min-height: 72px !important;
+                height: auto !important;
+                border-radius: 12px !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                line-height: 1.2 !important;
+                text-align: center !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
             }
-            
+            #fixedProgressBar { padding: 8px 15px !important; }
+            #fixedProgressBar .container { gap: 10px !important; }
+            #fixedProgressBar span { font-size: 0.9em !important; }
+            #healthForm { margin-top: 50px !important; }
             .option label[for$="_1"]:before,
             .option label[for$="_2"]:before,
             .option label[for$="_3"]:before,
             .option label[for$="_4"]:before,
             .option label[for$="_5"]:before {
-                font-size: 1.4em;
+                font-size: 1.1em !important;
+                margin-right: 0 !important;
+                margin-bottom: 4px !important;
+                display: block !important;
+                font-weight: 800 !important;
             }
-            
             .option label[for$="_1"]:after,
             .option label[for$="_2"]:after,
             .option label[for$="_3"]:after,
             .option label[for$="_4"]:after,
             .option label[for$="_5"]:after {
-                font-size: 0.7em;
+                font-size: 0.75em !important;
+                line-height: 1.1 !important;
             }
-            
-            /* Q22 移动端适配 */
-             .question:has(input[name="q22"]) .options {
-                 flex-direction: column !important;
-                 align-items: center;
-             }
-             
-             .question:has(input[name="q22"]) .option {
-                 min-width: 200px !important;
-                 margin-bottom: 10px;
-             }
-             
-             .header h1 {
-                 font-size: 2em;
+            .header h1 { font-size: 2em; }
+            .option input[type="radio"]:checked + label {
+                transform: translateY(-2px) scale(1.02) !important;
+                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.35) !important, 0 2px 8px rgba(118, 75, 162, 0.25) !important, 0 0 0 1px rgba(255,255,255,0.15) inset !important;
+            }
+            .option label:active {
+                transform: translateY(0) scale(0.98) !important;
+                transition: all 0.1s ease !important;
+            }
+            .question { padding: 24px 20px !important; }
+            .question-text {
+                font-size: 1.1em !important;
+                margin-bottom: 20px !important;
+                line-height: 1.5 !important;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <!-- 欢迎页面 -->
+        <div id="welcomePage" class="header">
             <h1>Say I Fine</h1>
             <p>身心健康评估问卷</p>
             <div class="welcome-content" style="background: #f8f9ff; padding: 25px; border-radius: 15px; margin-bottom: 20px; line-height: 1.8; color: #444;">
                 <p style="margin-bottom: 20px; font-size: 1.1em;">亲爱的朋友，您好！</p>
-                <p style="margin-bottom: 20px;">欢迎参与这份特别的健康评估问卷。它是基于前沿的"生活方式医学"理念，由<strong>**医院</strong>专家团队设计，为您量身打造的一次身心健康的自我探索。</p>
-                <p style="margin-bottom: 20px;">我们将通过一系列精心设计的问题，系统性地评估您在睡眠、运动、营养、肠道健康及情绪与精力这五大核心健康支柱上的现状。这个能帮助您清晰地"看见"身体发出的信号，找到影响您精力与活力的根本原因。</p>
+                <p style="margin-bottom: 20px;">欢迎参与这份特别的健康评估问卷。它是基于前沿的"生活方式医学"理念，由医院专家团队设计，为您量身打造的一次身心健康的自我探索。</p>
+                <p style="margin-bottom: 20px;">我们将通过精心设计的问题，系统性地评估您在睡眠、运动、营养、肠道健康及情绪与精力这五大核心健康支柱上的现状。这个能帮助您清晰地"看见"身体发出的信号，找到影响您精力与活力的根本原因。</p>
                 <p style="margin-bottom: 20px;">问卷预计将花费您 3-5分钟。我们承诺，您的所有回答都将被严格保密，并仅用于生成您的个性化健康分析报告。请放松心情，根据近一个月的真实情况作答。</p>
-                <p style="margin-bottom: 0; font-style: italic; color: #667eea;">感谢您愿意投入时间，开启这段探索更健康自我的旅程。</p>
+                <p style="margin-bottom: 20px; font-style: italic; color: #667eea;">感谢您愿意投入时间，开启这段探索更健康自我的旅程。</p>
+            </div>
+            <button id="startAssessment" class="submit-btn" style="margin: 0 auto; display: block;">开始评估</button>
+        </div>
+
+        <!-- 测试页面 -->
+        <div id="assessmentPage" class="header" style="display: none;">
+            <h1>Say I Fine</h1>
+            <p>身心健康评估问卷</p>
+        </div>
+        
+        <!-- 固定进度条 -->
+        <div id="fixedProgressBar" class="fixed-progress" style="display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 10px 20px;">
+            <div class="container" style="max-width: 800px; margin: 0 auto; display: flex; align-items: center; gap: 15px;">
+                <span id="progressText" style="font-weight: 600; color: #667eea; min-width: 120px;">第1步：基础信息</span>
+                <div class="progress-bar" style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+                    <div id="progressFill" class="progress-fill" style="width: 16.67%; height: 100%; background: linear-gradient(90deg, #667eea, #764ba2); transition: width 0.5s ease;"></div>
+                </div>
+                <span id="progressCount" style="color: #666; min-width: 30px; text-align: right;">1/6</span>
             </div>
         </div>
 
-        <form id="healthForm" class="questionnaire">
+        <form id="healthForm" class="questionnaire" style="display: none; margin-top: 60px;" role="form" aria-label="健康评估问卷">
             <!-- 基础信息模块 -->
             <div class="module basic-info">
                 <div class="module-header">基础信息</div>
@@ -704,23 +1156,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q6_1" name="q6" value="1" required>
-                            <label for="q6_1">完全不同意/从不如此</label>
+                            <label for="q6_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q6_2" name="q6" value="2" required>
-                            <label for="q6_2">不太同意/偶尔如此</label>
+                            <label for="q6_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q6_3" name="q6" value="3" required>
-                            <label for="q6_3">一般/有时如此</label>
+                            <label for="q6_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q6_4" name="q6" value="4" required>
-                            <label for="q6_4">比较同意/经常如此</label>
+                            <label for="q6_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q6_5" name="q6" value="5" required>
-                            <label for="q6_5">完全同意/总是如此</label>
+                            <label for="q6_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -732,23 +1184,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q7_1" name="q7" value="1" required>
-                            <label for="q7_1">完全不同意/从不如此</label>
+                            <label for="q7_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q7_2" name="q7" value="2" required>
-                            <label for="q7_2">不太同意/偶尔如此</label>
+                            <label for="q7_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q7_3" name="q7" value="3" required>
-                            <label for="q7_3">一般/有时如此</label>
+                            <label for="q7_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q7_4" name="q7" value="4" required>
-                            <label for="q7_4">比较同意/经常如此</label>
+                            <label for="q7_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q7_5" name="q7" value="5" required>
-                            <label for="q7_5">完全同意/总是如此</label>
+                            <label for="q7_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -760,23 +1212,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q8_1" name="q8" value="1" required>
-                            <label for="q8_1">完全不同意/从不如此</label>
+                            <label for="q8_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q8_2" name="q8" value="2" required>
-                            <label for="q8_2">不太同意/偶尔如此</label>
+                            <label for="q8_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q8_3" name="q8" value="3" required>
-                            <label for="q8_3">一般/有时如此</label>
+                            <label for="q8_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q8_4" name="q8" value="4" required>
-                            <label for="q8_4">比较同意/经常如此</label>
+                            <label for="q8_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q8_5" name="q8" value="5" required>
-                            <label for="q8_5">完全同意/总是如此</label>
+                            <label for="q8_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -788,23 +1240,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q9_1" name="q9" value="1" required>
-                            <label for="q9_1">完全不同意/从不如此</label>
+                            <label for="q9_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q9_2" name="q9" value="2" required>
-                            <label for="q9_2">不太同意/偶尔如此</label>
+                            <label for="q9_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q9_3" name="q9" value="3" required>
-                            <label for="q9_3">一般/有时如此</label>
+                            <label for="q9_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q9_4" name="q9" value="4" required>
-                            <label for="q9_4">比较同意/经常如此</label>
+                            <label for="q9_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q9_5" name="q9" value="5" required>
-                            <label for="q9_5">完全同意/总是如此</label>
+                            <label for="q9_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -816,23 +1268,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q10_1" name="q10" value="1" required>
-                            <label for="q10_1">完全不同意/从不如此</label>
+                            <label for="q10_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q10_2" name="q10" value="2" required>
-                            <label for="q10_2">不太同意/偶尔如此</label>
+                            <label for="q10_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q10_3" name="q10" value="3" required>
-                            <label for="q10_3">一般/有时如此</label>
+                            <label for="q10_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q10_4" name="q10" value="4" required>
-                            <label for="q10_4">比较同意/经常如此</label>
+                            <label for="q10_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q10_5" name="q10" value="5" required>
-                            <label for="q10_5">完全同意/总是如此</label>
+                            <label for="q10_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -844,23 +1296,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q11_1" name="q11" value="1" required>
-                            <label for="q11_1">完全不同意/从不如此</label>
+                            <label for="q11_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q11_2" name="q11" value="2" required>
-                            <label for="q11_2">不太同意/偶尔如此</label>
+                            <label for="q11_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q11_3" name="q11" value="3" required>
-                            <label for="q11_3">一般/有时如此</label>
+                            <label for="q11_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q11_4" name="q11" value="4" required>
-                            <label for="q11_4">比较同意/经常如此</label>
+                            <label for="q11_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q11_5" name="q11" value="5" required>
-                            <label for="q11_5">完全同意/总是如此</label>
+                            <label for="q11_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -878,23 +1330,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q12_1" name="q12" value="1" required>
-                            <label for="q12_1">完全不同意/从不如此</label>
+                            <label for="q12_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q12_2" name="q12" value="2" required>
-                            <label for="q12_2">不太同意/偶尔如此</label>
+                            <label for="q12_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q12_3" name="q12" value="3" required>
-                            <label for="q12_3">一般/有时如此</label>
+                            <label for="q12_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q12_4" name="q12" value="4" required>
-                            <label for="q12_4">比较同意/经常如此</label>
+                            <label for="q12_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q12_5" name="q12" value="5" required>
-                            <label for="q12_5">完全同意/总是如此</label>
+                            <label for="q12_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -906,23 +1358,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q13_1" name="q13" value="1" required>
-                            <label for="q13_1">完全不同意/从不如此</label>
+                            <label for="q13_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q13_2" name="q13" value="2" required>
-                            <label for="q13_2">不太同意/偶尔如此</label>
+                            <label for="q13_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q13_3" name="q13" value="3" required>
-                            <label for="q13_3">一般/有时如此</label>
+                            <label for="q13_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q13_4" name="q13" value="4" required>
-                            <label for="q13_4">比较同意/经常如此</label>
+                            <label for="q13_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q13_5" name="q13" value="5" required>
-                            <label for="q13_5">完全同意/总是如此</label>
+                            <label for="q13_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -934,23 +1386,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q14_1" name="q14" value="1" required>
-                            <label for="q14_1">完全不同意/从不如此</label>
+                            <label for="q14_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q14_2" name="q14" value="2" required>
-                            <label for="q14_2">不太同意/偶尔如此</label>
+                            <label for="q14_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q14_3" name="q14" value="3" required>
-                            <label for="q14_3">一般/有时如此</label>
+                            <label for="q14_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q14_4" name="q14" value="4" required>
-                            <label for="q14_4">比较同意/经常如此</label>
+                            <label for="q14_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q14_5" name="q14" value="5" required>
-                            <label for="q14_5">完全同意/总是如此</label>
+                            <label for="q14_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -962,23 +1414,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q15_1" name="q15" value="1" required>
-                            <label for="q15_1">完全不同意/从不如此</label>
+                            <label for="q15_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q15_2" name="q15" value="2" required>
-                            <label for="q15_2">不太同意/偶尔如此</label>
+                            <label for="q15_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q15_3" name="q15" value="3" required>
-                            <label for="q15_3">一般/有时如此</label>
+                            <label for="q15_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q15_4" name="q15" value="4" required>
-                            <label for="q15_4">比较同意/经常如此</label>
+                            <label for="q15_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q15_5" name="q15" value="5" required>
-                            <label for="q15_5">完全同意/总是如此</label>
+                            <label for="q15_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -990,23 +1442,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q16_1" name="q16" value="1" required>
-                            <label for="q16_1">完全不同意/从不如此</label>
+                            <label for="q16_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q16_2" name="q16" value="2" required>
-                            <label for="q16_2">不太同意/偶尔如此</label>
+                            <label for="q16_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q16_3" name="q16" value="3" required>
-                            <label for="q16_3">一般/有时如此</label>
+                            <label for="q16_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q16_4" name="q16" value="4" required>
-                            <label for="q16_4">比较同意/经常如此</label>
+                            <label for="q16_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q16_5" name="q16" value="5" required>
-                            <label for="q16_5">完全同意/总是如此</label>
+                            <label for="q16_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -1018,23 +1470,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q17_1" name="q17" value="1" required>
-                            <label for="q17_1">完全不同意/从不如此</label>
+                            <label for="q17_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q17_2" name="q17" value="2" required>
-                            <label for="q17_2">不太同意/偶尔如此</label>
+                            <label for="q17_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q17_3" name="q17" value="3" required>
-                            <label for="q17_3">一般/有时如此</label>
+                            <label for="q17_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q17_4" name="q17" value="4" required>
-                            <label for="q17_4">比较同意/经常如此</label>
+                            <label for="q17_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q17_5" name="q17" value="5" required>
-                            <label for="q17_5">完全同意/总是如此</label>
+                            <label for="q17_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -1052,23 +1504,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q18_1" name="q18" value="1" required>
-                            <label for="q18_1">完全不同意/从不如此</label>
+                            <label for="q18_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q18_2" name="q18" value="2" required>
-                            <label for="q18_2">不太同意/偶尔如此</label>
+                            <label for="q18_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q18_3" name="q18" value="3" required>
-                            <label for="q18_3">一般/有时如此</label>
+                            <label for="q18_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q18_4" name="q18" value="4" required>
-                            <label for="q18_4">比较同意/经常如此</label>
+                            <label for="q18_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q18_5" name="q18" value="5" required>
-                            <label for="q18_5">完全同意/总是如此</label>
+                            <label for="q18_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -1080,23 +1532,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q19_1" name="q19" value="1" required>
-                            <label for="q19_1">完全不同意/从不如此</label>
+                            <label for="q19_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q19_2" name="q19" value="2" required>
-                            <label for="q19_2">不太同意/偶尔如此</label>
+                            <label for="q19_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q19_3" name="q19" value="3" required>
-                            <label for="q19_3">一般/有时如此</label>
+                            <label for="q19_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q19_4" name="q19" value="4" required>
-                            <label for="q19_4">比较同意/经常如此</label>
+                            <label for="q19_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q19_5" name="q19" value="5" required>
-                            <label for="q19_5">完全同意/总是如此</label>
+                            <label for="q19_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -1108,23 +1560,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q20_1" name="q20" value="1" required>
-                            <label for="q20_1">完全不同意/从不如此</label>
+                            <label for="q20_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q20_2" name="q20" value="2" required>
-                            <label for="q20_2">不太同意/偶尔如此</label>
+                            <label for="q20_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q20_3" name="q20" value="3" required>
-                            <label for="q20_3">一般/有时如此</label>
+                            <label for="q20_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q20_4" name="q20" value="4" required>
-                            <label for="q20_4">比较同意/经常如此</label>
+                            <label for="q20_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q20_5" name="q20" value="5" required>
-                            <label for="q20_5">完全同意/总是如此</label>
+                            <label for="q20_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -1136,23 +1588,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q21_1" name="q21" value="1" required>
-                            <label for="q21_1">完全不同意/从不如此</label>
+                            <label for="q21_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q21_2" name="q21" value="2" required>
-                            <label for="q21_2">不太同意/偶尔如此</label>
+                            <label for="q21_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q21_3" name="q21" value="3" required>
-                            <label for="q21_3">一般/有时如此</label>
+                            <label for="q21_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q21_4" name="q21" value="4" required>
-                            <label for="q21_4">比较同意/经常如此</label>
+                            <label for="q21_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q21_5" name="q21" value="5" required>
-                            <label for="q21_5">完全同意/总是如此</label>
+                            <label for="q21_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -1161,27 +1613,27 @@
                     <div class="question-text">
                         <span class="question-number">Q22.</span>我的粪便形态是理想的（如光滑的香蕉状），没有过干、过硬或稀烂、粘马桶的情况。
                     </div>
-                    <div class="options" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
-                        <div class="option" style="display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; min-width: 120px; cursor: pointer;" onclick="document.getElementById('q22_1').checked = true;">
-                             <input type="radio" id="q22_1" name="q22" value="1" required style="margin-bottom: 5px;">
-                             <label for="q22_1" style="text-align: center; font-size: 14px; font-weight: bold;">1分<br>分离的硬块状<br>（便秘，最差）</label>
-                         </div>
-                        <div class="option" style="display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; min-width: 120px; cursor: pointer;" onclick="document.getElementById('q22_2').checked = true;">
-                             <input type="radio" id="q22_2" name="q22" value="2" required style="margin-bottom: 5px;">
-                             <label for="q22_2" style="text-align: center; font-size: 14px; font-weight: bold;">2分<br>完全液体状<br>（腹泻）</label>
-                         </div>
-                        <div class="option" style="display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; min-width: 120px; cursor: pointer;" onclick="document.getElementById('q22_3').checked = true;">
-                             <input type="radio" id="q22_3" name="q22" value="3" required style="margin-bottom: 5px;">
-                             <label for="q22_3" style="text-align: center; font-size: 14px; font-weight: bold;">3分<br>糊状便<br>（偏软）</label>
-                         </div>
-                        <div class="option" style="display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; min-width: 120px; cursor: pointer;" onclick="document.getElementById('q22_4').checked = true;">
-                             <input type="radio" id="q22_4" name="q22" value="4" required style="margin-bottom: 5px;">
-                             <label for="q22_4" style="text-align: center; font-size: 14px; font-weight: bold;">4分<br>软块状<br>（偏软便）</label>
-                         </div>
-                        <div class="option" style="display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; min-width: 120px; cursor: pointer;" onclick="document.getElementById('q22_5').checked = true;">
-                             <input type="radio" id="q22_5" name="q22" value="5" required style="margin-bottom: 5px;">
-                             <label for="q22_5" style="text-align: center; font-size: 14px; font-weight: bold;">5分<br>光滑香蕉状<br>（理想状态）</label>
-                         </div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q22_1" name="q22" value="1" required>
+                            <label for="q22_1">从不如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q22_2" name="q22" value="2" required>
+                            <label for="q22_2">偶尔如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q22_3" name="q22" value="3" required>
+                            <label for="q22_3">有时如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q22_4" name="q22" value="4" required>
+                            <label for="q22_4">经常如此</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q22_5" name="q22" value="5" required>
+                            <label for="q22_5">总是如此</label>
+                        </div>
                     </div>
                 </div>
 
@@ -1192,23 +1644,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q23_1" name="q23" value="1" required>
-                            <label for="q23_1">完全不同意/从不如此</label>
+                            <label for="q23_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q23_2" name="q23" value="2" required>
-                            <label for="q23_2">不太同意/偶尔如此</label>
+                            <label for="q23_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q23_3" name="q23" value="3" required>
-                            <label for="q23_3">一般/有时如此</label>
+                            <label for="q23_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q23_4" name="q23" value="4" required>
-                            <label for="q23_4">比较同意/经常如此</label>
+                            <label for="q23_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q23_5" name="q23" value="5" required>
-                            <label for="q23_5">完全同意/总是如此</label>
+                            <label for="q23_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -1226,23 +1678,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q24_1" name="q24" value="1" required>
-                            <label for="q24_1">完全不同意/从不如此</label>
+                            <label for="q24_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q24_2" name="q24" value="2" required>
-                            <label for="q24_2">不太同意/偶尔如此</label>
+                            <label for="q24_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q24_3" name="q24" value="3" required>
-                            <label for="q24_3">一般/有时如此</label>
+                            <label for="q24_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q24_4" name="q24" value="4" required>
-                            <label for="q24_4">比较同意/经常如此</label>
+                            <label for="q24_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q24_5" name="q24" value="5" required>
-                            <label for="q24_5">完全同意/总是如此</label>
+                            <label for="q24_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -1254,23 +1706,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q25_1" name="q25" value="1" required>
-                            <label for="q25_1">完全不同意/从不如此</label>
+                            <label for="q25_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q25_2" name="q25" value="2" required>
-                            <label for="q25_2">不太同意/偶尔如此</label>
+                            <label for="q25_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q25_3" name="q25" value="3" required>
-                            <label for="q25_3">一般/有时如此</label>
+                            <label for="q25_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q25_4" name="q25" value="4" required>
-                            <label for="q25_4">比较同意/经常如此</label>
+                            <label for="q25_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q25_5" name="q25" value="5" required>
-                            <label for="q25_5">完全同意/总是如此</label>
+                            <label for="q25_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -1282,23 +1734,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q26_1" name="q26" value="1" required>
-                            <label for="q26_1">完全不同意/从不如此</label>
+                            <label for="q26_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q26_2" name="q26" value="2" required>
-                            <label for="q26_2">不太同意/偶尔如此</label>
+                            <label for="q26_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q26_3" name="q26" value="3" required>
-                            <label for="q26_3">一般/有时如此</label>
+                            <label for="q26_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q26_4" name="q26" value="4" required>
-                            <label for="q26_4">比较同意/经常如此</label>
+                            <label for="q26_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q26_5" name="q26" value="5" required>
-                            <label for="q26_5">完全同意/总是如此</label>
+                            <label for="q26_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -1316,23 +1768,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q27_1" name="q27" value="1" required>
-                            <label for="q27_1">完全不同意/从不如此</label>
+                            <label for="q27_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q27_2" name="q27" value="2" required>
-                            <label for="q27_2">不太同意/偶尔如此</label>
+                            <label for="q27_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q27_3" name="q27" value="3" required>
-                            <label for="q27_3">一般/有时如此</label>
+                            <label for="q27_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q27_4" name="q27" value="4" required>
-                            <label for="q27_4">比较同意/经常如此</label>
+                            <label for="q27_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q27_5" name="q27" value="5" required>
-                            <label for="q27_5">完全同意/总是如此</label>
+                            <label for="q27_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -1344,23 +1796,23 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q28_1" name="q28" value="1" required>
-                            <label for="q28_1">完全不同意/从不如此</label>
+                            <label for="q28_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q28_2" name="q28" value="2" required>
-                            <label for="q28_2">不太同意/偶尔如此</label>
+                            <label for="q28_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q28_3" name="q28" value="3" required>
-                            <label for="q28_3">一般/有时如此</label>
+                            <label for="q28_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q28_4" name="q28" value="4" required>
-                            <label for="q28_4">比较同意/经常如此</label>
+                            <label for="q28_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q28_5" name="q28" value="5" required>
-                            <label for="q28_5">完全同意/总是如此</label>
+                            <label for="q28_5">总是如此</label>
                         </div>
                     </div>
                 </div>
@@ -1372,32 +1824,45 @@
                     <div class="options">
                         <div class="option">
                             <input type="radio" id="q29_1" name="q29" value="1" required>
-                            <label for="q29_1">完全不同意/从不如此</label>
+                            <label for="q29_1">从不如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q29_2" name="q29" value="2" required>
-                            <label for="q29_2">不太同意/偶尔如此</label>
+                            <label for="q29_2">偶尔如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q29_3" name="q29" value="3" required>
-                            <label for="q29_3">一般/有时如此</label>
+                            <label for="q29_3">有时如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q29_4" name="q29" value="4" required>
-                            <label for="q29_4">比较同意/经常如此</label>
+                            <label for="q29_4">经常如此</label>
                         </div>
                         <div class="option">
                             <input type="radio" id="q29_5" name="q29" value="5" required>
-                            <label for="q29_5">完全同意/总是如此</label>
+                            <label for="q29_5">总是如此</label>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <button type="submit" class="submit-btn">提交评估</button>
+            
+            <!-- 模块导航按钮 -->
+            <div class="module-navigation" style="padding: 30px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+                <button type="button" id="prevBtn" class="submit-btn" style="background: #999; display: none;">上一步</button>
+                <div style="flex: 1;"></div>
+                <button type="button" id="nextBtn" class="submit-btn">继续</button>
+                <button type="submit" id="submitBtn" class="submit-btn" style="display: none;">提交评估</button>
+            </div>
         </form>
 
-        <div id="results" class="results">
+        <!-- 结果页面 -->
+        <div id="resultsPage" class="header" style="display: none;">
+            <h1>Say I Fine</h1>
+            <p>您的健康评估结果</p>
+        </div>
+        
+        <div id="results" class="results" style="display: none;">
             <h2>您的健康评估结果</h2>
             <div class="results-container">
                 <div class="radar-chart-container">
@@ -1406,11 +1871,395 @@
                 </div>
                 <div id="resultsContent"></div>
             </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button id="restartBtn" class="submit-btn" style="background: #667eea;">重新评估</button>
+            </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        // 模块配置
+        const modules = [
+            { id: 'basic-info', name: '基础信息', class: 'basic-info' },
+            { id: 'emotion', name: '情绪与精力', class: '' },
+            { id: 'sleep', name: '睡眠', class: '' },
+            { id: 'gut', name: '肠道', class: '' },
+            { id: 'nutrition', name: '营养', class: '' },
+            { id: 'exercise', name: '运动', class: '' }
+        ];
+        
+        let currentModuleIndex = 0;
+        
+        // Toast 通知函数
+        function showToast(message, type = 'info') {
+            // 移除现有的toast
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+            
+            // 创建新的toast
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icons = {
+                info: 'ℹ',
+                warning: '⚠',
+                success: '✓',
+                error: '✕'
+            };
+            
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <div class="toast-icon">${icons[type] || icons.info}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // 显示动画
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // 自动隐藏
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.remove();
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // 页面初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                initializeAssessment();
+                
+                // 性能监控
+                if ('performance' in window) {
+                    window.addEventListener('load', function() {
+                        const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                        console.log('页面加载时间:', loadTime + 'ms');
+                    });
+                }
+                
+                // 全局错误处理
+                window.addEventListener('error', function(e) {
+                    console.error('页面错误:', e.error);
+                    showToast('页面出现错误，请刷新重试', 'error');
+                });
+                
+                // Promise错误处理
+                window.addEventListener('unhandledrejection', function(e) {
+                    console.error('未处理的Promise错误:', e.reason);
+                    showToast('系统错误，请重试', 'error');
+                });
+                
+            } catch (error) {
+                console.error('初始化错误:', error);
+                showToast('页面初始化失败，请刷新重试', 'error');
+            }
+        });
+        
+        function initializeAssessment() {
+            // 检查是否有保存的进度
+            const savedProgress = localStorage.getItem('healthAssessmentProgress');
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                if (confirm('检测到您有未完成的评估，是否继续之前的进度？')) {
+                    restoreProgress(progress);
+                    return;
+                } else {
+                    localStorage.removeItem('healthAssessmentProgress');
+                }
+            }
+            
+            // 开始评估按钮事件
+            document.getElementById('startAssessment').addEventListener('click', function() {
+                document.getElementById('welcomePage').style.display = 'none';
+                document.getElementById('assessmentPage').style.display = 'block';
+                document.getElementById('fixedProgressBar').style.display = 'block';
+                document.getElementById('healthForm').style.display = 'block';
+                showModule(0);
+            });
+            
+            // 页面离开确认
+            window.addEventListener('beforeunload', function(e) {
+                const form = document.getElementById('healthForm');
+                if (form.style.display !== 'none' && !isFormComplete()) {
+                    e.preventDefault();
+                    e.returnValue = '您的评估尚未完成，确定要离开吗？';
+                    saveProgress();
+                }
+            });
+            
+            // 定期保存进度
+            setInterval(saveProgress, 30000); // 每30秒保存一次
+            
+            // 继续按钮事件
+            document.getElementById('nextBtn').addEventListener('click', function() {
+                const btn = this;
+                btn.classList.add('loading');
+                btn.disabled = true;
+                
+                setTimeout(() => {
+                    if (validateCurrentModule()) {
+                        if (currentModuleIndex < modules.length - 1) {
+                            currentModuleIndex++;
+                            showModule(currentModuleIndex);
+                        }
+                    }
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
+                }, 300);
+            });
+            
+            // 上一步按钮事件
+            document.getElementById('prevBtn').addEventListener('click', function() {
+                if (currentModuleIndex > 0) {
+                    currentModuleIndex--;
+                    showModule(currentModuleIndex);
+                }
+            });
+            
+            // 初始化模块显示
+            hideAllModules();
+            
+            // 重新评估按钮事件
+            document.getElementById('restartBtn').addEventListener('click', function() {
+                restartAssessment();
+            });
+        }
+        
+        // 数据持久化相关函数
+        function saveProgress() {
+            try {
+                const form = document.getElementById('healthForm');
+                if (form.style.display === 'none') return;
+                
+                const formData = new FormData(form);
+                const answers = {};
+                
+                for (let [key, value] of formData.entries()) {
+                    answers[key] = value;
+                }
+                
+                const progress = {
+                    currentModuleIndex,
+                    answers,
+                    timestamp: Date.now()
+                };
+                
+                localStorage.setItem('healthAssessmentProgress', JSON.stringify(progress));
+            } catch (error) {
+                console.error('保存进度失败:', error);
+            }
+        }
+        
+        function restoreProgress(progress) {
+            try {
+                currentModuleIndex = progress.currentModuleIndex || 0;
+                
+                // 恢复表单数据
+                for (let [key, value] of Object.entries(progress.answers || {})) {
+                    const element = document.querySelector(`[name="${key}"]`);
+                    if (element) {
+                        if (element.type === 'radio') {
+                            const radio = document.querySelector(`input[name="${key}"][value="${value}"]`);
+                            if (radio) radio.checked = true;
+                        } else {
+                            element.value = value;
+                        }
+                    }
+                }
+                
+                // 显示评估页面
+                document.getElementById('welcomePage').style.display = 'none';
+                document.getElementById('assessmentPage').style.display = 'block';
+                document.getElementById('fixedProgressBar').style.display = 'block';
+                document.getElementById('healthForm').style.display = 'block';
+                
+                showModule(currentModuleIndex);
+                showToast('已恢复您的评估进度', 'success');
+            } catch (error) {
+                console.error('恢复进度失败:', error);
+                showToast('恢复进度失败，将重新开始', 'warning');
+                localStorage.removeItem('healthAssessmentProgress');
+            }
+        }
+        
+        function isFormComplete() {
+            return checkAllQuestionsAnswered() === null;
+        }
+        
+        function showResultsPage(results) {
+            // 隐藏评估页面
+            document.getElementById('assessmentPage').style.display = 'none';
+            document.getElementById('fixedProgressBar').style.display = 'none';
+            document.getElementById('healthForm').style.display = 'none';
+            
+            // 显示结果页面
+            document.getElementById('resultsPage').style.display = 'block';
+            document.getElementById('results').style.display = 'block';
+            
+            // 显示结果内容
+            displayResults(results);
+        }
+        
+        function restartAssessment() {
+            // 重置表单
+            document.getElementById('healthForm').reset();
+            
+            // 重置模块索引
+            currentModuleIndex = 0;
+            
+            // 隐藏结果页面和固定元素
+            document.getElementById('resultsPage').style.display = 'none';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('fixedProgressBar').style.display = 'none';
+            
+            // 显示欢迎页面
+            document.getElementById('welcomePage').style.display = 'block';
+        }
+        
+        function showModule(index) {
+            hideAllModules();
+            
+            const moduleElements = document.querySelectorAll('.module');
+            if (moduleElements[index]) {
+                moduleElements[index].style.display = 'block';
+                // 添加动画效果
+                setTimeout(() => {
+                    moduleElements[index].classList.add('active');
+                }, 50);
+            }
+            
+            updateProgress(index);
+            updateNavigationButtons(index);
+            
+            // 滚动到页面顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // 添加页面切换的触觉反馈（如果支持）
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
+        }
+        
+        function hideAllModules() {
+            const moduleElements = document.querySelectorAll('.module');
+            moduleElements.forEach(module => {
+                module.classList.remove('active');
+                module.style.display = 'none';
+            });
+        }
+        
+        function updateProgress(index) {
+            const progressText = document.getElementById('progressText');
+            const progressCount = document.getElementById('progressCount');
+            const progressFill = document.getElementById('progressFill');
+            
+            progressText.textContent = `第${index + 1}步：${modules[index].name}`;
+            progressCount.textContent = `${index + 1}/6`;
+            
+            const progressPercentage = ((index + 1) / 6) * 100;
+            progressFill.style.width = `${progressPercentage}%`;
+        }
+        
+        function updateNavigationButtons(index) {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // 上一步按钮
+            if (index === 0) {
+                prevBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'inline-block';
+            }
+            
+            // 继续/提交按钮
+            if (index === modules.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+        }
+        
+        function validateCurrentModule() {
+            const moduleElements = document.querySelectorAll('.module');
+            const currentModule = moduleElements[currentModuleIndex];
+            
+            if (currentModuleIndex === 0) {
+                // 验证基础信息模块
+                const requiredFields = ['gender', 'birth_year', 'province', 'city', 'job_status', 'marriage_status'];
+                
+                for (let fieldName of requiredFields) {
+                    const field = currentModule.querySelector(`[name="${fieldName}"]`);
+                    if (field) {
+                        if (field.type === 'radio') {
+                            const checked = currentModule.querySelector(`input[name="${fieldName}"]:checked`);
+                            if (!checked) {
+                                const fieldLabel = field.closest('.question').querySelector('.question-text').textContent;
+                                showToast(`请完成：${fieldLabel}`, 'warning');
+                                field.closest('.question').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                return false;
+                            }
+                        } else if (field.tagName === 'SELECT') {
+                            if (!field.value) {
+                                const fieldLabel = field.closest('.question').querySelector('.question-text').textContent;
+                                showToast(`请完成：${fieldLabel}`, 'warning');
+                                field.closest('.question').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                field.focus();
+                                return false;
+                            }
+                        }
+                    }
+                }
+            } else {
+                // 验证评分模块
+                const questions = currentModule.querySelectorAll('.question');
+                for (let question of questions) {
+                    const radioInputs = question.querySelectorAll('input[type="radio"]');
+                    if (radioInputs.length > 0) {
+                        const questionName = radioInputs[0].name;
+                        const checked = question.querySelector(`input[name="${questionName}"]:checked`);
+                        if (!checked) {
+                            // 高亮未完成的题目
+                            question.style.background = 'rgba(255, 68, 68, 0.1)';
+                            question.style.border = '2px solid #ff4444';
+                            question.style.borderRadius = '12px';
+                            question.style.padding = '23px 28px';
+                            
+                            // 滚动到未完成的题目
+                            question.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            
+                            // 显示友好的提示
+                            showToast(`请完成第${currentModuleIndex + 1}步的所有题目`, 'warning');
+                            
+                            // 3秒后移除高亮
+                            setTimeout(() => {
+                                question.style.background = '';
+                                question.style.border = '';
+                                question.style.borderRadius = '';
+                                question.style.padding = '';
+                            }, 3000);
+                            
+                            return false;
+                        }
+                    }
+                }
+            }
+            
+            return true;
+        }
         document.getElementById('healthForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -1453,26 +2302,55 @@
                     }, 3000);
                 }
                 
-                alert(`请回答第${questionNumber}题后再提交评估`);
+                showToast(`请回答第${questionNumber}题后再提交评估`, 'warning');
                 return;
             }
             
             // 收集所有答案
-            const formData = new FormData(this);
-            const answers = {};
+            try {
+                const formData = new FormData(this);
+                const answers = {};
+                
+                for (let [key, value] of formData.entries()) {
+                    // 数据清理和验证
+                    if (typeof value === 'string') {
+                        value = value.trim();
+                    }
+                    answers[key] = value;
+                }
+                
+                // 验证数据完整性
+                if (Object.keys(answers).length === 0) {
+                    showToast('数据收集失败，请重试', 'error');
+                    return;
+                }
+                
+                // 计算各模块得分
+                const results = calculateScores(answers);
+                
+                if (!results) {
+                     showToast('计算结果时出现错误，请重试', 'error');
+                     return;
+                 }
+                 
+                 // 清除保存的进度
+                 localStorage.removeItem('healthAssessmentProgress');
+                 
+                 // 显示成功提示
+                 showToast('评估完成！正在生成您的健康报告...', 'success');
+                 
+                 // 延迟显示结果页面，增加仪式感
+                 setTimeout(() => {
+                     showResultsPage(results);
+                 }, 1500);
+                 
+             } catch (error) {
+                 console.error('表单提交错误:', error);
+                 showToast('提交过程中出现错误，请重试', 'error');
+             }
             
-            for (let [key, value] of formData.entries()) {
-                answers[key] = value;
-            }
-            
-            // 计算各模块得分
-            const results = calculateScores(answers);
-            
-            // 显示结果
-            displayResults(results);
-            
-            // 滚动到结果区域
-            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            // 显示结果页面
+            // showResultsPage(results);
         });
         
         function checkAllQuestionsAnswered() {
@@ -1639,7 +2517,6 @@
           }
           
           function displayResults(results) {
-              const resultsDiv = document.getElementById('results');
               const resultsContent = document.getElementById('resultsContent');
               
               let html = '';
@@ -1658,7 +2535,6 @@
               }
               
               resultsContent.innerHTML = html;
-              resultsDiv.style.display = 'block';
               
               // 创建雷达图
               createRadarChart(results);
